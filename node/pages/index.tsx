@@ -399,13 +399,10 @@ const OneSet = () => {
   return (
     <div>
       {info.map((item) => (
-        <div className={styles.box2}>
-          <span className={styles.box2_title}></span>
-          <p className={styles.box2_p}>
-            <Category />
-            <Brand />
-            <Prices />
-          </p>
+        <div className={styles.box1}>
+          <Category />
+          <Brand />
+          <Prices />
         </div>
       ))}
       <div
