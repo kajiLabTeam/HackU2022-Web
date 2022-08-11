@@ -189,9 +189,9 @@ const CanShow = () => {
   const [canShowFlg, setCanShowFlg] = React.useState(false);
   console.log(canShowFlg);
   return (
-    <div>
-      <p>公開</p>
-      <p
+    <div className={styles.flexBox}>
+      <div>公開</div>
+      <div
         id="maru"
         className={styles.notSelectRect}
         onClick={() => {
@@ -206,8 +206,9 @@ const CanShow = () => {
         }}
       >
         ○
-      </p>
-      <p
+      </div>
+      <div></div>
+      <div
         id="batsu"
         className={styles.selectRect}
         onClick={() => {
@@ -221,7 +222,7 @@ const CanShow = () => {
         }}
       >
         x
-      </p>
+      </div>
     </div>
   );
 };
@@ -250,28 +251,37 @@ let categoryList = [
   "カバン",
 ];
 
-const Category = () => {
+interface Indexes {
+  index: number;
+}
+
+//🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️ここ質問！！🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️
+//1.eventの補足の仕方について
+//2.nullの対処について
+//event: {target: { value: React.ChangeEvent<HTMLInputElement> };}
+//event: React.ChangeEvent<HTMLInputElement>
+
+const Category = ({ index }: Indexes) => {
   const [category, setCategory] = React.useState("確認用：未設定");
-  //🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️ここ質問！！🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️🟨⬛️
-  //1.eventの補足の仕方について
-  //2.nullの対処について
-  //event: {target: { value: React.ChangeEvent<HTMLInputElement> };}
-  //event: React.ChangeEvent<HTMLInputElement>
   const categoryChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
     if (event.target.value == "inSelf") {
-      let res = window.prompt("type Category");
+      let res = window.prompt("追加するカテゴリを入力してください");
       if (res != "" && res != null) {
         setCategory(res);
+        informArray[index].category = res;
         categoryList[categoryList.length] = res;
       }
     } else {
-      setCategory(event.target.value);
+      let res = event.target.value + "";
+      setCategory(res);
+      informArray[index].category = res;
     }
   };
   return (
     <div>
+      {index}
       <p>
         カテゴリ：
         <select name="" id="" onChange={categoryChange}>
@@ -296,7 +306,7 @@ let brandList = [
   "RAGEBLUE",
   "GAP",
 ];
-const Brand = () => {
+const Brand = ({ index }: Indexes) => {
   const [brand, setBrand] = React.useState("確認用：未設定");
   const brandChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -305,10 +315,13 @@ const Brand = () => {
       let res = window.prompt("type Brand");
       if (res != "" && res != null) {
         setBrand(res);
+        informArray[index].brand = res;
         brandList[brandList.length] = res;
       }
     } else {
       setBrand(event.target.value);
+      let res = event.target.value + "";
+      informArray[index].brand = res;
     }
   };
   return (
@@ -341,7 +354,7 @@ let pricesList = [
   "15000~20000円",
   "20000円~",
 ];
-const Prices = () => {
+const Prices = ({ index }: Indexes) => {
   const [prices, setPrices] = React.useState("確認用：未設定");
   const pricesChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -350,10 +363,13 @@ const Prices = () => {
       let res = window.prompt("type Brand");
       if (res != "" && res != null) {
         setPrices(res);
+        informArray[index].prices = res;
         pricesList[pricesList.length] = res;
       }
     } else {
       setPrices(event.target.value);
+      let res = event.target.value + "";
+      informArray[index].prices = res;
     }
   };
   return (
@@ -381,6 +397,10 @@ interface infoSet {
 // infoSets: infoSet[];
 //}
 //informArray[informArray.length] = { category: "", brand: "", prices: "" };
+//
+
+//ちょうどいいし、この中に値を入れるようにしておこう
+//後で1,2,3は外しておく
 var informArray: infoSet[] = [
   { category: "", brand: "", prices: "" },
   { category: "", brand: "", prices: "" },
@@ -398,11 +418,28 @@ const OneSet = () => {
 */
   return (
     <div>
-      {info.map((item) => (
-        <div className={styles.box1}>
-          <Category />
-          <Brand />
-          <Prices />
+      {info.map((item, index) => (
+        <div className={styles.box2}>
+          <div
+            className={styles.box2_title}
+            onClick={() => {
+              console.log(informArray.map((aaa) => aaa));
+              console.log("indeの値は" + index);
+              let tmp = info;
+              tmp.splice(index, 1);
+              setInfo(tmp);
+              informArray = tmp;
+              setGomi(gomi + 1);
+              console.log(informArray.map((aaa) => aaa));
+            }}
+          >
+            {"この項目を削除する"}
+          </div>
+          <div className={styles.box2_p}>
+            <Category index={index} />
+            <Brand index={index} />
+            <Prices index={index} />
+          </div>
         </div>
       ))}
       <div
@@ -414,11 +451,25 @@ const OneSet = () => {
             prices: "",
           };
           setInfo(info);
+          informArray = info;
           setGomi(gomi + 1);
         }}
       >
-        +
+        +項目を増やす+
       </div>
+    </div>
+  );
+};
+
+//デバッグ用
+const InformArrayCheck = () => {
+  return (
+    <div
+      onClick={() => {
+        console.log(informArray.map((aaa) => aaa));
+      }}
+    >
+      InuiKoko
     </div>
   );
 };
@@ -438,10 +489,11 @@ const Home: NextPage = () => {
         <br />
         <br />
         <br />
-
+        <InformArrayCheck />
         <ImageConverter />
         <CanShow />
         <OneSet />
+
         <div className={styles.box2}>
           <span className={styles.box2_title}>ここにタイトル</span>
           <p className={styles.box2_p}>ここに文章</p>

@@ -123,10 +123,11 @@
 */
 .header {
   position: fixed;/*固定*/
-  font-size: 50px;
+  font-size: 3em;
   color :white;
   left: 0;
   right:0;
+  height:10%;
   margin-left: 0%;
   margin-right: 0%;
   padding:1%;
@@ -144,8 +145,10 @@
   line-height: 80px;
 }
 
+/*display: inline-block;*/
+/**/
 .selectRect{
-  display: inline-block;
+  
   width: 80px;
   height: 80px;
   background: #aaaaaa;/*背景色*/
@@ -153,7 +156,7 @@
   line-height: 80px;
 }
 .notSelectRect{
-  display: inline-block;
+  
   width: 80px;
   height: 80px;
   background: #f5f5f5;/*背景色*/
@@ -217,4 +220,8 @@
 .box2_p {
   margin: 0; 
   padding: 0;
+}
+
+.flexBox{
+  display: flex;
 }
