@@ -410,12 +410,6 @@ var informArray: infoSet[] = [
 const OneSet = () => {
   const [info, setInfo] = React.useState(informArray);
   const [gomi, setGomi] = React.useState(3);
-  /*
-<div className={styles.box2}>
-          <span className={styles.box2_title}>ここにタイトル</span>
-          <p className={styles.box2_p}>ここに文章</p>
-        </div>
-*/
   return (
     <div>
       {info.map((item, index) => (
@@ -499,6 +493,7 @@ const Home: NextPage = () => {
           <p className={styles.box2_p}>ここに文章</p>
         </div>
         <p>登録</p>
+
         <br />
         <br />
         <br />
