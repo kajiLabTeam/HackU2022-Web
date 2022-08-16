@@ -11,6 +11,30 @@ import { format } from "node:path/win32";
 import { info } from "node:console";
 import { MarkUnreadChatAlt } from "@mui/icons-material";
 
+import { tamesu } from "./tamesu";
+import { tamesu2 } from "./tamesu2";
+
+//ここからcloudinaryの設定
+// Require the cloudinary library
+//const cloudinary = require("cloudinary").v2;
+/*
+cloudinary.config({
+  cloud_name: "dhbnknlos",
+  api_key: "995897863114336",
+  api_secret: "hjIOGoEVLA5ktgDgq87U9-v_eiA",
+});
+// Log the configuration
+console.log("コンフィグレーション:");
+console.log(cloudinary.config());
+*/
+
+console.log("表示されてるか");
+let aa = tamesu();
+//console.log(aa);
+
+//let aaa2 = tamesu2();
+//console.log(aaa2);
+
 //後から使う値
 const text = "なんかテキストっぽいもの";
 const flag = true;
@@ -467,6 +491,8 @@ const InformArrayCheck = () => {
     </div>
   );
 };
+
+//<Image src={aa} width={250} height={250}></Image>
 
 //🟨🟨🟨🟨🟨🟨ここから実際のやってるとこ！！🟨🟨🟨🟨🟨🟨
 const Home: NextPage = () => {

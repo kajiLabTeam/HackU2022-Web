@@ -15,7 +15,12 @@ function MapPage() {
       }),
     []
   );
-  return <Map />;
+  return (
+    <div>
+      <p>aiueo</p>
+      <Map />
+    </div>
+  );
 }
 
 export default MapPage;
