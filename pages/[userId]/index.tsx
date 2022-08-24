@@ -35,6 +35,7 @@ const UserPage: NextPage = () => {
   //https://swr.vercel.app/ja/docs/global-configuration
   const { data } = useSWR<Like[]>(
     `/likes?receive_user_id=${router.query.userId}`
+    //"/likes"
     //"/ping"
   );
 

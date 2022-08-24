@@ -8,3 +8,4 @@ export * from "./RadioButtonsGroup";
 export * from "./ActionAreaCard";
 export * from "./CrossMap";
 export * from "./ImageGrid";
+export * from "./API/AddCoordinates";
