@@ -12,24 +12,15 @@ import {
 
 import useSWR from "swr";
 
-interface Send_users {
-  gender: number;
-  age: string;
-  height: number;
-  lat: string;
-  lng: string;
-}
-
-interface map {
+interface Like {
+  id: string;
+  lat: number;
+  lon: number;
+  send_user_id: string;
+  receive_user_id: string;
   coordinate_id: string;
-  user_id: string;
-  image: string;
-  Send_users: Send_users[];
-}
-
-interface MapInfo {
-  map: map[];
-  status: boolean;
+  created_at: Date;
+  update_at: Date;
 }
 
 const tmpImages = [
@@ -39,7 +30,13 @@ const tmpImages = [
 
 const UserPage: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<MapInfo>(`/likes?user_id=${router.query.userId}`);
+
+  //swrの解説
+  //https://swr.vercel.app/ja/docs/global-configuration
+  const { data } = useSWR<Like[]>(
+    `/likes?receive_user_id=${router.query.userId}`
+    //"/ping"
+  );
 
   return (
     <Box>
@@ -56,59 +53,11 @@ const UserPage: NextPage = () => {
         link =`${userid}/details/${clossId}`
         ]
         */}
-
-        {/* <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
-            <CoordinateCard
-              imageURL="https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg"
-              link="id/details/aa"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CoordinateCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CoordinateCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CoordinateCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CoordinateCard />
-          </Grid>
-        </Grid> */}
       </Container>
-
+      <pre>{JSON.stringify(data, null, 2)}</pre>
       <SimpleBottomNavigation pageNum={2} />
     </Box>
   );
 };
-
-// export interface CoordinateCardProps {
-//   imageURL?: string;
-//   link?: string;
-// }
-
-// export const CoordinateCard = ({ imageURL, link }: CoordinateCardProps) => {
-//   const router = useRouter();
-//   return (
-//     <Paper
-//       sx={{
-//         width: "100%",
-//         height: "320px",
-//         overflow: "hidden",
-//         // 参考になるページ
-//         // https://developer.mozilla.org/ja/docs/Web/CSS/filter
-//         "&:hover": { filter: "contrast(200%)" },
-//       }}
-//       elevation={3}
-//       onClick={() => {
-//         router.push(link ?? "/");
-//       }}
-//     >
-//       <img src={imageURL ?? "代替えURL"} width="100%" height="100%" />
-//     </Paper>
-//   );
-// };
 
 export default UserPage;

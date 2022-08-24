@@ -3,7 +3,8 @@ import { SWRConfig } from "swr";
 import axios from "axios";
 import "../styles/globals.css";
 
-const SERVER_URL = "http://20.168.98.13:8080";
+//const SERVER_URL = "https://lavlus-api.ayaka.work";
+const SERVER_URL = "https://xclothes.harutiro.net";
 
 const fetcher = async (path: string) => {
   const { data } = await axios.get(SERVER_URL + path);
