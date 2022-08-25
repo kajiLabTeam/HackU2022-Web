@@ -8,7 +8,15 @@ import {
   Stack,
   TextField,
   Container,
+  NativeSelect,
+  FormControl,
+  InputLabel,
+  Alert,
+  Snackbar,
+  Box,
+  AlertColor,
 } from "@mui/material";
+
 import {
   CustomAppBar,
   ClothesInput,
@@ -28,8 +36,6 @@ const initialState = {
   age: "20",
 };
 
-const user_id = "13YjhgjtM";
-
 interface UserData {
   id: string;
   ble: string;
@@ -46,7 +52,17 @@ interface UserData {
 const Home: NextPage = () => {
   const router = useRouter();
 
-  const [values, setValues] = React.useState(initialState); //今まで使ってたやつ
+  //Snackbar用の
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState<AlertColor>("info");
+  const [message, setMessage] = React.useState("");
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
+  };
 
   //const { data: userData } = useSWR<UserData>(`/users/${user_id}`, {
   const { data: userData } = useSWR<UserData>("/users/-0MlNSjap", {
@@ -63,8 +79,8 @@ const Home: NextPage = () => {
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
-            //value={values.imageURL}
-            onChange={(e) => setValues({ ...values, imageURL: e })}
+            beforeImaheURL={formValue?.icon}
+            onChange={(e) => userData && setFormValue({ ...userData, icon: e })}
           />
           <TextField
             id="standard-basic"
@@ -76,17 +92,9 @@ const Home: NextPage = () => {
             }}
           />
           <RadioButtonsGroup
-            value={
-              formValue?.gender === 1
-                ? "1"
-                : formValue?.gender === 2
-                ? "2"
-                : "3" ?? ""
-            }
+            value={formValue?.gender}
             onChange={(e) => {
-              //setValues({ ...values, gender: e });
-              //mutate({ ...userData, gender: e.target.value });
-              //setFormValue({ ...userData, gender: e });
+              userData && setFormValue({ ...userData, gender: e });
             }}
           />
           <TextField
@@ -96,58 +104,44 @@ const Home: NextPage = () => {
             InputLabelProps={{
               shrink: true,
             }}
-            defaultValue="160"
+            value={formValue?.height ?? {}}
             variant="standard"
-            //value={values.height}
-            onChange={(e) => setValues({ ...values, height: e.target.value })}
-          />
-          <TextField
-            id="standard-number"
-            label="年齢"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
+            onChange={(e) => {
+              const tmpHeight = e.target.value;
+              userData &&
+                setFormValue({ ...userData, height: Number(tmpHeight) });
             }}
-            variant="standard"
-            defaultValue="20"
-            onChange={(v) => setValues({ ...values, age: v.target.value })}
           />
-          {/*
-          <FormControlLabel
-            control={
-              <Switch
-                defaultChecked
-                onChange={() =>
-                  setValues({ ...values, public: !values.public })
-                }
-              />
-            }
-            label="公開"
-          />
-          <ClothesInput
-            value={values.clothes}
-            onChange={(v) => setValues({ ...values, clothes: v })}
-          />
-          */}
-          <br />
-          <br />
-          {/*
-          <TextField
-            label="ここにタイトル"
-            variant="outlined"
-            value={values.title}
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
-          />
-          <TextField
-            label="ここに文章"
-            multiline
-            rows={4}
-            variant="outlined"
-            onChange={(e) =>
-              setValues({ ...values, description: e.target.value })
-            }
-          />
-          */}
+          <FormControl fullWidth>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+              年齢:{formValue?.age ?? ""}
+            </InputLabel>
+            <NativeSelect
+              value={formValue?.age ?? ""}
+              inputProps={{
+                name: "age",
+                id: "uncontrolled-native",
+              }}
+              onChange={(e) => {
+                userData && setFormValue({ ...userData, age: e.target.value });
+              }}
+            >
+              <option value="~10">~10</option>
+              <option value="11~15">11~15</option>
+              <option value="16~20">16~20</option>
+              <option value="21~25">21~25</option>
+              <option value="26~30">26~30</option>
+              <option value="31~35">31~35</option>
+              <option value="36~40">36~40</option>
+              <option value="41~45">41~45</option>
+              <option value="46~50">46~50</option>
+              <option value="51~55">51~55</option>
+              <option value="56~60">56~60</option>
+              <option value="56~60">56~60</option>
+              <option value="61~">61~</option>
+            </NativeSelect>
+          </FormControl>
+          <Box></Box>
           <Button
             variant="contained"
             onClick={async () => {
@@ -156,18 +150,39 @@ const Home: NextPage = () => {
                 const response = await axios.put(url, formValue);
                 console.log(response);
                 //router.replace("/hoge"); // 登録後の遷移先
+                setOpen(true);
+                setSeverity("success");
+                setMessage("更新しました");
               } catch (e) {
                 console.error(e);
+                setOpen(true);
+                setSeverity("error");
+                setMessage("更新に失敗しました");
               }
             }}
           >
-            登録
+            更新
           </Button>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
-          <pre>{JSON.stringify(formValue, null, 2)}</pre>
+
+          {/* デバッグよう */}
+          {/* <pre>{JSON.stringify(formValue, null, 2)}</pre> */}
         </Stack>
       </Container>
       <SimpleBottomNavigation pageNum={1} />
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity ?? "info"}
+          sx={{ width: "100%" }}
+        >
+          {message ?? "No Message"}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

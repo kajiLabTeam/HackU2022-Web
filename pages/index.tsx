@@ -60,7 +60,10 @@ const testSendCoordinate: Coordinate = {
 };
 
 const Home: NextPage = () => {
-  const [values, setValues] = React.useState(initialState);
+  //const [values, setValues] = React.useState(initialState);
+  const [values, setValues] = React.useState<Coordinate>();
+
+  //Snackbarの用
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState<AlertColor>("info");
   const [message, setMessage] = React.useState("");
@@ -71,6 +74,7 @@ const Home: NextPage = () => {
     if (reason === "clickaway") return;
     setOpen(false);
   };
+
   return (
     <>
       <CustomAppBar title="服登録" />
@@ -100,23 +104,7 @@ const Home: NextPage = () => {
             //valuesの中のclothesの中に、vの値を入れている
             // ->　vの値の中身がわかれば良い
           />
-          {/*
-          <TextField
-            label="ここにタイトル"
-            variant="outlined"
-            value={values.title}
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
-          />
-          <TextField
-            label="ここに文章"
-            multiline
-            rows={4}
-            variant="outlined"
-            onChange={(e) =>
-              setValues({ ...values, description: e.target.value })
-            }
-          />
-          */}
+
           <Button
             variant="contained"
             onClick={async () => {
@@ -157,6 +145,23 @@ const Home: NextPage = () => {
           {message ?? "No Message"}
         </Alert>
       </Snackbar>
+      {/*
+          <TextField
+            label="ここにタイトル"
+            variant="outlined"
+            value={values.title}
+            onChange={(e) => setValues({ ...values, title: e.target.value })}
+          />
+          <TextField
+            label="ここに文章"
+            multiline
+            rows={4}
+            variant="outlined"
+            onChange={(e) =>
+              setValues({ ...values, description: e.target.value })
+            }
+          />
+          */}
     </>
   );
 };

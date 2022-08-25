@@ -26,11 +26,16 @@ export interface CloudinaryUploadedResponse {
 }
 
 export interface ImageInputProps {
+  beforeImaheURL?: string;
   onChange?: (value: string) => void;
 }
 
-export const CloudinaryUpload = ({ onChange }: ImageInputProps) => {
-  const [imgUrl, setImgUrl] = React.useState("");
+export const CloudinaryUpload = ({
+  beforeImaheURL,
+  onChange,
+}: ImageInputProps) => {
+  const [imgUrl, setImgUrl] = React.useState(beforeImaheURL);
+
   return (
     <Box sx={{ marginLeft: "auto", marginRight: "auto" }}>
       <Box
@@ -38,15 +43,17 @@ export const CloudinaryUpload = ({ onChange }: ImageInputProps) => {
           backgroundColor: "gray",
           width: "128px", //"128px" "35vw"
           height: "128px",
-          borderRadius: "64px", //"64px" "2vw"
+          // borderRadius: "64px", //"64px" "2vw"
           overflow: "hidden",
         }}
       >
-        {imgUrl !== "" && <img src={imgUrl} width="100%" height="100%" />}
+        {imgUrl !== "" && (
+          <img src={beforeImaheURL} width="100%" height="100%" />
+        )}
       </Box>
 
       <Button variant="contained" component="label" sx={{ marginRight: "0%" }}>
-        Image Upload
+        画像を選択
         <input
           hidden
           accept="image/*"
