@@ -22,20 +22,6 @@ import axios from "axios";
 import { FlashlightOnTwoTone } from "@mui/icons-material";
 import { info } from "console";
 
-// const initialState = {
-//   imageURL: "",
-//   public: false,
-//   clothes: [
-//     {
-//       category: "トップス",
-//       brand: "uniqlo",
-//       price: "0~1000",
-//     },
-//   ],
-//   title: "",
-//   description: "",
-// };
-
 interface wear {
   category: string;
   brand: string;
@@ -52,7 +38,7 @@ interface Coordinate {
 const initialState: Coordinate = {
   public: false,
   image: "",
-  user_id: "",
+  user_id: "13YjhgjtM",
   wears: [{ category: "トップス", brand: "uniqlo", price: "0~1000" }],
 };
 
@@ -78,7 +64,8 @@ const Home: NextPage = () => {
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
-            onChange={(imgUrl) => setValues({ ...values, image: imgUrl })}
+            beforeImaheURL={values?.image}
+            onChange={(v) => setValues({ ...values, image: v })}
           />
           <FormControlLabel
             control={
@@ -125,7 +112,6 @@ const Home: NextPage = () => {
           >
             登録
           </Button>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
         </Stack>
       </Container>
       <SimpleBottomNavigation pageNum={0} />
@@ -143,6 +129,10 @@ const Home: NextPage = () => {
           {message ?? "No Message"}
         </Alert>
       </Snackbar>
+
+      {/* デバッグよう */}
+      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+
       {/*
           <TextField
             label="ここにタイトル"
