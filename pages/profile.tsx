@@ -18,6 +18,8 @@ import {
 } from "../components";
 import axios from "axios";
 
+import useSWR, { useSWRConfig } from "swr";
+
 const initialState = {
   imageURL: "",
   name: "nanashi",
@@ -26,28 +28,66 @@ const initialState = {
   age: "20",
 };
 
+const user_id = "13YjhgjtM";
+
+interface UserData {
+  id: string;
+  ble: string;
+  mail: string;
+  name: string;
+  gender: number;
+  age: string;
+  height: number;
+  icon: string;
+  created_at?: Date;
+  update_at?: Date;
+}
+
 const Home: NextPage = () => {
   const router = useRouter();
-  const [values, setValues] = React.useState(initialState);
+
+  const [values, setValues] = React.useState(initialState); //今まで使ってたやつ
+
+  //const { data: userData } = useSWR<UserData>(`/users/${user_id}`, {
+  const { data: userData } = useSWR<UserData>("/users/-0MlNSjap", {
+    revalidateOnFocus: false,
+  });
+  const [formValue, setFormValue] = React.useState<UserData>();
+  React.useEffect(() => {
+    userData && setFormValue(userData);
+  }, [userData]);
+
   return (
     <>
       <CustomAppBar title="プロフィール更新" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
-            value={values.imageURL}
+            //value={values.imageURL}
             onChange={(e) => setValues({ ...values, imageURL: e })}
           />
           <TextField
             id="standard-basic"
             label="名前"
             variant="standard"
-            value={values.name}
-            onChange={(e) => setValues({ ...values, name: e.target.value })}
+            value={formValue?.name ?? ""}
+            onChange={(e) => {
+              userData && setFormValue({ ...userData, name: e.target.value });
+            }}
           />
           <RadioButtonsGroup
-            value={values.gender}
-            onChange={(e) => setValues({ ...values, gender: e })}
+            value={
+              formValue?.gender === 1
+                ? "1"
+                : formValue?.gender === 2
+                ? "2"
+                : "3" ?? ""
+            }
+            onChange={(e) => {
+              //setValues({ ...values, gender: e });
+              //mutate({ ...userData, gender: e.target.value });
+              //setFormValue({ ...userData, gender: e });
+            }}
           />
           <TextField
             id="standard-number"
@@ -112,10 +152,10 @@ const Home: NextPage = () => {
             variant="contained"
             onClick={async () => {
               try {
-                const url = "服登録のURL";
-                const response = await axios.post(url, values);
+                const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
+                const response = await axios.put(url, formValue);
                 console.log(response);
-                router.replace("/hoge"); // 登録後の遷移先
+                //router.replace("/hoge"); // 登録後の遷移先
               } catch (e) {
                 console.error(e);
               }
@@ -124,6 +164,7 @@ const Home: NextPage = () => {
             登録
           </Button>
           <pre>{JSON.stringify(values, null, 2)}</pre>
+          <pre>{JSON.stringify(formValue, null, 2)}</pre>
         </Stack>
       </Container>
       <SimpleBottomNavigation pageNum={1} />

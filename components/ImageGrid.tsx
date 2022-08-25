@@ -29,7 +29,7 @@ export const ImageGrid = ({
   return (
     <Grid container spacing={2}>
       {CoordinateCardProp.map((value, index) => (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4} key={Math.random()}>
           <CoordinateCard imageURL={value.imageURL} link={value.link} />
         </Grid>
       ))}

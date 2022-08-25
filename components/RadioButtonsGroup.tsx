@@ -11,7 +11,7 @@ export interface GenderInputProps {
 }
 
 export const RadioButtonsGroup = ({ value, onChange }: GenderInputProps) => {
-  const [values, setValues] = React.useState("");
+  const [values, setValues] = React.useState(value ?? 3);
   return (
     <FormControl>
       <FormLabel id="demo-radio-buttons-group-label">性別</FormLabel>
@@ -21,12 +21,12 @@ export const RadioButtonsGroup = ({ value, onChange }: GenderInputProps) => {
           setValues(event.target.value);
         }}
         aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="2"
+        defaultValue={value}
         name="radio-buttons-group"
       >
-        <FormControlLabel value="2" control={<Radio />} label="女" />
-        <FormControlLabel value="1" control={<Radio />} label="男" />
-        <FormControlLabel value="3" control={<Radio />} label="その他" />
+        <FormControlLabel value={2} control={<Radio />} label="女" />
+        <FormControlLabel value={1} control={<Radio />} label="男" />
+        <FormControlLabel value={3} control={<Radio />} label="その他" />
       </RadioGroup>
     </FormControl>
   );

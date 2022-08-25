@@ -12,18 +12,32 @@ interface CustomAppBarProps {
 
 export const CustomAppBar = ({ title }: CustomAppBarProps) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        // position: "fixed",
+        // top: "0px",
+        // left: "0px",
+        // right: "0px",
+        // zIndex: "1",
+      }}
+    >
       <AppBar position="static">
         <Toolbar variant="dense">
-          <IconButton
+          {/* <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
+          </IconButton> */}
+          <Typography
+            variant="h6"
+            color="inherit"
+            component="div"
+            sx={{ marginLeft: "20px" }}
+          >
             {title}
           </Typography>
         </Toolbar>

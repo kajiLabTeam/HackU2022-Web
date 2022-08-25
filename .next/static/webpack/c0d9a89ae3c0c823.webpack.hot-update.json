@@ -1,0 +1,1 @@
+{"c":["pages/login","webpack"],"r":["pages/[userId]/details/[coordinateId]"],"m":["./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2FUsers%2Ffuma%2FGitHub%2FHackU2022-Web%2Fpages%2F%5BuserId%5D%2Fdetails%2F%5BcoordinateId%5D.tsx&page=%2F%5BuserId%5D%2Fdetails%2F%5BcoordinateId%5D!","./pages/[userId]/details/[coordinateId].tsx"]}

@@ -12,16 +12,7 @@ import {
 
 import useSWR from "swr";
 
-interface Like {
-  id: string;
-  lat: number;
-  lon: number;
-  send_user_id: string;
-  receive_user_id: string;
-  coordinate_id: string;
-  created_at: Date;
-  update_at: Date;
-}
+import { Like, Coordinate } from "../../types";
 
 const tmpImages = [
   "https://res.cloudinary.com/dificqqyf/image/upload/v1661253712/kez6ljjzjzwfkh5fedpa.jpg",
@@ -33,29 +24,49 @@ const UserPage: NextPage = () => {
 
   //swrの解説
   //https://swr.vercel.app/ja/docs/global-configuration
-  const { data } = useSWR<Like[]>(
+  const { data: likes } = useSWR<Like[]>(
     `/likes?receive_user_id=${router.query.userId}`
-    //"/likes"
-    //"/ping"
   );
+
+  const { data: coordinates } = useSWR<Coordinate[]>("/coordinates");
 
   return (
     <Box>
       <CustomAppBar title="X clothes" />
       <Box sx={{ width: "100vw" }}>
-        <CrossMap />
+        <CrossMap
+          positions={
+            (likes &&
+              likes.map((like) => {
+                return { lat: like.lat, lon: like.lon };
+              })) ??
+            []
+          }
+        />
       </Box>
 
       <Container maxWidth="lg" sx={{ padding: 6 }}>
-        <ImageGrid />
+        <ImageGrid
+          CoordinateCardProp={
+            (coordinates &&
+              coordinates.map((coordinate) => {
+                return {
+                  imageURL:
+                    "https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg",
+                  link: "userid/details/coordinateid",
+                };
+              })) ??
+            []
+          }
+        />
         {/*
-        CoordinateCardProps[]=[
+        CoordinateCardProp[]=[
         imageURL そのままのurl
         link =`${userid}/details/${clossId}`
         ]
         */}
       </Container>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{JSON.stringify(coordinates, null, 2)}</pre>
       <SimpleBottomNavigation pageNum={2} />
     </Box>
   );

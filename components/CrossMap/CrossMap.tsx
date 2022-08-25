@@ -14,29 +14,32 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow.src,
 });
 
-interface position {
-  latitude: number;
-  longitude: number;
+interface Position {
+  lat: number;
+  lon: number;
 }
 
 // interface positions {
 //   positions?: position[];
 // }
 
-const tmpPoses: position[] = [
-  { latitude: 35.1830169, longitude: 137.1121831 },
-  { latitude: 35.0202183, longitude: 136.47301121 },
+const tmpPoses: Position[] = [
+  { lat: 35.1830169, lon: 137.1121831 },
+  { lat: 35.0202183, lon: 136.47301121 },
   {
-    latitude: 35.174499411111,
-    longitude: 137.08854111111,
+    lat: 35.174499411111,
+    lon: 137.08854111111,
   },
 ];
 
-const CrossMap = ({ positions = tmpPoses }: { positions?: position[] }) => {
+const CrossMap = ({ positions = tmpPoses }: { positions?: Position[] }) => {
   return (
     <>
       <MapContainer
-        center={[positions[0].latitude, positions[0].longitude]}
+        center={[
+          positions[0]?.lat ?? tmpPoses[0].lat,
+          positions[0]?.lon ?? tmpPoses[0].lon,
+        ]}
         zoom={12}
         scrollWheelZoom={false}
         style={{ height: "50vh", width: "100%" }}
@@ -47,7 +50,7 @@ const CrossMap = ({ positions = tmpPoses }: { positions?: position[] }) => {
         />
 
         {positions.map((value, index) => (
-          <Marker position={[value.latitude, value.longitude]}>
+          <Marker position={[value.lat, value.lon]} key={Math.random()}>
             <Popup>{index + 1}</Popup>
           </Marker>
         ))}

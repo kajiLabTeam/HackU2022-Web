@@ -1,18 +1,6 @@
 import axios from "axios";
 import React from "react";
 
-// "put_flag": true,
-//     "public": false,
-//     "image": "aaaaa",
-//     "ble": "aaaa",
-//     "user_id": "W22h7S0tM",
-//     "wears": [
-//         {
-//             "category": "string",
-//             "brand": "string",
-//             "price": "string"
-//         }
-//     ]
 interface wear {
   category: string;
   brand: string;
@@ -36,7 +24,7 @@ export const AddCoordinates = () => {
   const [coordinateData, setCoordinateData] = React.useState<SendData>();
 
   const fetch = React.useMemo(async () => {
-    const { data } = await api.post<SendData>("/coordinates");
+    const { data } = await api.post<SendData>(`/coordinates,`);
     console.log(data);
     setCoordinateData(data);
   }, []);

@@ -20,6 +20,7 @@ import {
 } from "../components";
 import axios from "axios";
 import { FlashlightOnTwoTone } from "@mui/icons-material";
+import { info } from "console";
 
 const initialState = {
   imageURL: "",
@@ -33,6 +34,29 @@ const initialState = {
   ],
   title: "",
   description: "",
+};
+
+interface wear {
+  category: string;
+  brand: string;
+  price: string;
+}
+
+interface Coordinate {
+  public: boolean;
+  image: string;
+  user_id: string;
+  wears: wear[];
+}
+
+const testSendCoordinate: Coordinate = {
+  public: false,
+  image: "aaaab",
+  user_id: "-0MlNSjap",
+  wears: [
+    { category: "トップス", brand: "無印良品", price: "1000〜3000" },
+    { category: "ボトムス", brand: "ユニクロ", price: "1000〜3000" },
+  ],
 };
 
 const Home: NextPage = () => {
@@ -63,7 +87,12 @@ const Home: NextPage = () => {
                 }
               />
             }
-            label="すれちがった人以外にも服を公開する"
+            label={
+              values.public === true
+                ? "すれちがった人以外にも服を公開する"
+                : "すれ違った人にのみ服を公開する"
+            }
+            //label="すれちがった人以外にも服を公開する"
           />
           <ClothesInput
             value={values.clothes}
@@ -92,35 +121,23 @@ const Home: NextPage = () => {
             variant="contained"
             onClick={async () => {
               try {
-                const url = "服登録のURL";
-                const response = await axios.post(url, values);
+                const url = "https://xclothes.harutiro.net/coordinates";
+                //const url = "/coordinates";
+                const response = await axios.post(url, testSendCoordinate);
                 console.log(response);
-                //router.replace("/hoge"); // 登録後の遷移先
+
+                setOpen(true);
+                setSeverity("success");
+                setMessage("登録しました");
               } catch (e) {
                 console.error(e);
+                setOpen(true);
+                setSeverity("error");
+                setMessage("登録に失敗しました");
               }
             }}
           >
             登録
-          </Button>
-
-          <Button
-            onClick={() => {
-              setOpen(true);
-              setSeverity("success");
-              setMessage("登録しました");
-            }}
-          >
-            成功した時
-          </Button>
-          <Button
-            onClick={() => {
-              setOpen(true);
-              setSeverity("error");
-              setMessage("登録に失敗しました");
-            }}
-          >
-            失敗した時
           </Button>
           <pre>{JSON.stringify(values, null, 2)}</pre>
         </Stack>
