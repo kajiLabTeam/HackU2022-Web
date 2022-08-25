@@ -1,52 +1,46 @@
-//  https://nextjs.org/
-
 import React from "react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import {
   Button,
-  Switch,
-  FormControlLabel,
   Stack,
+  TextField,
   Container,
-  AlertColor,
   Snackbar,
   Alert,
+  AlertColor,
+  Box,
 } from "@mui/material";
-import {
-  CustomAppBar,
-  ClothesInput,
-  CloudinaryUpload,
-  SimpleBottomNavigation,
-} from "../components";
+import { CustomAppBar, SimpleBottomNavigation } from "../components";
 import axios from "axios";
-import { FlashlightOnTwoTone } from "@mui/icons-material";
-import { info } from "console";
 
-interface wear {
-  category: string;
-  brand: string;
-  price: string;
-}
-
-interface Coordinate {
-  public: boolean;
-  image: string;
-  user_id: string;
-  wears: wear[];
-}
-
-const initialState: Coordinate = {
-  public: false,
-  image: "",
-  user_id: "13YjhgjtM",
-  wears: [{ category: "トップス", brand: "uniqlo", price: "0~1000" }],
+const tmpMail: string = "fuma@aitech.ac.jp";
+const tmpValue = {
+  name: "fuma",
+  ble: "qawse",
+  icon: "https://res.cloudinary.com/fuma",
+  gender: 1,
+  age: "20〜25",
+  height: 175,
+  mail: "fuma@aitech.ac.jp",
 };
 
-const Home: NextPage = () => {
-  //const [values, setValues] = React.useState(initialState);
-  const [values, setValues] = React.useState<Coordinate>(initialState);
+interface Tmp {
+  id: string;
+  ble: string;
+  mail: string;
+  name: string;
+  gender: number;
+  age: string;
+  height: number;
+  icon: string;
+  created_at: Date;
+  update_at: Date;
+}
 
-  //Snackbarの用
+const Home: NextPage = () => {
+  const router = useRouter();
+  const [eMail, setEMail] = React.useState(tmpMail);
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState<AlertColor>("info");
   const [message, setMessage] = React.useState("");
@@ -60,61 +54,69 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <CustomAppBar title="服登録" />
+      <CustomAppBar title="ログイン" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
-          <CloudinaryUpload
-            beforeImaheURL={values?.image}
-            onChange={(v) => setValues({ ...values, image: v })}
+          <Box></Box>
+          <Box></Box>
+          <TextField
+            id="standard-basic"
+            label="e-mail"
+            variant="standard"
+            // value={values.name}
+            onChange={(e) => setEMail(e.target.value)}
           />
-          <FormControlLabel
-            control={
-              <Switch
-                onChange={() =>
-                  setValues({ ...values, public: !values.public })
-                }
-              />
-            }
-            label={
-              values?.public === true
-                ? "すれちがった人以外にも服を公開する"
-                : "すれ違った人にのみ服を公開する"
-            }
-            // label="すれちがった人以外にも服を公開する"
-          />
-          <ClothesInput
-            //value={values.clothes}
-            value={values?.wears}
-            onChange={(v) => setValues({ ...values, wears: v })}
-            //valuesの中のclothesの中に、vの値を入れている
-            // ->　vの値の中身がわかれば良い
-          />
+
+          <Box></Box>
+          <Box></Box>
 
           <Button
             variant="contained"
             onClick={async () => {
               try {
-                const url = "https://xclothes.harutiro.net/coordinates";
-                //const url = "/coordinates";
-                const response = await axios.post(url, values);
-                console.log(response);
+                const url = `https://xclothes.harutiro.net/users/mail/${eMail}`;
+                //const url = "https://xclothes.harutiro.net/users";
 
+                const response = await axios.get(url);
+                console.log(response);
+                //console.log(response.data.id);
+                //router.replace("/addCoordinate"); // 登録後の遷移先
+                router.replace(`/${response.data.id}`); // 登録後の遷移先
                 setOpen(true);
                 setSeverity("success");
-                setMessage("登録しました");
+                setMessage("ログインに成功しました");
               } catch (e) {
                 console.error(e);
                 setOpen(true);
                 setSeverity("error");
-                setMessage("登録に失敗しました");
+                setMessage("ログインに失敗しました");
               }
             }}
           >
-            登録
+            ログイン
           </Button>
+
+          {/* <Button
+            variant="contained"
+            onClick={async () => {
+              try {
+                const url = "https://xclothes.harutiro.net/users/signup";
+                const response: Tmp = await axios.post(url, tmpValue);
+                console.log(response);
+                router.replace("/addCoordinate"); // 登録後の遷移先
+              } catch (e) {
+                console.error(e);
+              }
+            }}
+          >
+            postのテスト
+          </Button> */}
+
+          <pre>{JSON.stringify(eMail, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(tmpValue, null, 2)}</pre> */}
         </Stack>
       </Container>
-      <SimpleBottomNavigation pageNum={0} />
+      {/* <SimpleBottomNavigation /> */}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
@@ -129,29 +131,21 @@ const Home: NextPage = () => {
           {message ?? "No Message"}
         </Alert>
       </Snackbar>
-
-      {/* デバッグよう */}
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-
-      {/*
-          <TextField
-            label="ここにタイトル"
-            variant="outlined"
-            value={values.title}
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
-          />
-          <TextField
-            label="ここに文章"
-            multiline
-            rows={4}
-            variant="outlined"
-            onChange={(e) =>
-              setValues({ ...values, description: e.target.value })
-            }
-          />
-          */}
     </>
   );
 };
 
 export default Home;
+
+/*
+onClick={() => {
+            //console.log("kita");
+            router.push({
+              pathname: "/evaluationDetails", //URL
+              query: { input: id }, //検索クエリ
+            });
+          }}
+
+
+{router.query.input}
+*/

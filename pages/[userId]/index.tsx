@@ -13,6 +13,7 @@ import {
 import useSWR from "swr";
 
 import { Like, Coordinate } from "../../types";
+import { userAgent } from "next/server";
 
 const tmpImages = [
   "https://res.cloudinary.com/dificqqyf/image/upload/v1661253712/kez6ljjzjzwfkh5fedpa.jpg",
@@ -32,6 +33,7 @@ const UserPage: NextPage = () => {
 
   return (
     <Box>
+      {/* <h1>user_id:{router.query.userId}</h1> */}
       <CustomAppBar title="X clothes" />
       <Box sx={{ width: "100vw" }}>
         <CrossMap
@@ -53,7 +55,8 @@ const UserPage: NextPage = () => {
                 return {
                   imageURL:
                     "https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg",
-                  link: "userid/details/coordinateid",
+                  link: `${router.query.userId}/details/coordinateid`,
+                  //link: "userid/details/coordinateid",
                 };
               })) ??
             []
@@ -66,8 +69,18 @@ const UserPage: NextPage = () => {
         ]
         */}
       </Container>
+
       <pre>{JSON.stringify(coordinates, null, 2)}</pre>
-      <SimpleBottomNavigation pageNum={2} />
+      <SimpleBottomNavigation
+        pageNum={2}
+        user_id={
+          typeof router.query.userId === "string"
+            ? router.query.userId
+            : "error"
+        }
+      />
+
+      {/* if (typeof router.query.userId === "string")  */}
     </Box>
   );
 };

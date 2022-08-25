@@ -75,7 +75,9 @@ const Home: NextPage = () => {
 
   return (
     <>
+      {/* <h1>user_id:{router.query.userId}</h1> */}
       <CustomAppBar title="プロフィール更新" />
+
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
@@ -168,7 +170,14 @@ const Home: NextPage = () => {
           {/* <pre>{JSON.stringify(formValue, null, 2)}</pre> */}
         </Stack>
       </Container>
-      <SimpleBottomNavigation pageNum={1} />
+      <SimpleBottomNavigation
+        pageNum={0}
+        user_id={
+          typeof router.query.moveId === "string"
+            ? router.query.moveId
+            : "error"
+        }
+      />
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
