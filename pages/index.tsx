@@ -22,19 +22,19 @@ import axios from "axios";
 import { FlashlightOnTwoTone } from "@mui/icons-material";
 import { info } from "console";
 
-const initialState = {
-  imageURL: "",
-  public: false,
-  clothes: [
-    {
-      category: "トップス",
-      brand: "uniqlo",
-      price: "0~1000",
-    },
-  ],
-  title: "",
-  description: "",
-};
+// const initialState = {
+//   imageURL: "",
+//   public: false,
+//   clothes: [
+//     {
+//       category: "トップス",
+//       brand: "uniqlo",
+//       price: "0~1000",
+//     },
+//   ],
+//   title: "",
+//   description: "",
+// };
 
 interface wear {
   category: string;
@@ -49,19 +49,16 @@ interface Coordinate {
   wears: wear[];
 }
 
-const testSendCoordinate: Coordinate = {
+const initialState: Coordinate = {
   public: false,
-  image: "aaaab",
-  user_id: "-0MlNSjap",
-  wears: [
-    { category: "トップス", brand: "無印良品", price: "1000〜3000" },
-    { category: "ボトムス", brand: "ユニクロ", price: "1000〜3000" },
-  ],
+  image: "",
+  user_id: "",
+  wears: [{ category: "トップス", brand: "uniqlo", price: "0~1000" }],
 };
 
 const Home: NextPage = () => {
   //const [values, setValues] = React.useState(initialState);
-  const [values, setValues] = React.useState<Coordinate>();
+  const [values, setValues] = React.useState<Coordinate>(initialState);
 
   //Snackbarの用
   const [open, setOpen] = React.useState(false);
@@ -81,7 +78,7 @@ const Home: NextPage = () => {
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
-            onChange={(imgUrl) => setValues({ ...values, imageURL: imgUrl })}
+            onChange={(imgUrl) => setValues({ ...values, image: imgUrl })}
           />
           <FormControlLabel
             control={
@@ -92,15 +89,16 @@ const Home: NextPage = () => {
               />
             }
             label={
-              values.public === true
+              values?.public === true
                 ? "すれちがった人以外にも服を公開する"
                 : "すれ違った人にのみ服を公開する"
             }
-            //label="すれちがった人以外にも服を公開する"
+            // label="すれちがった人以外にも服を公開する"
           />
           <ClothesInput
-            value={values.clothes}
-            onChange={(v) => setValues({ ...values, clothes: v })}
+            //value={values.clothes}
+            value={values?.wears}
+            onChange={(v) => setValues({ ...values, wears: v })}
             //valuesの中のclothesの中に、vの値を入れている
             // ->　vの値の中身がわかれば良い
           />
@@ -111,7 +109,7 @@ const Home: NextPage = () => {
               try {
                 const url = "https://xclothes.harutiro.net/coordinates";
                 //const url = "/coordinates";
-                const response = await axios.post(url, testSendCoordinate);
+                const response = await axios.post(url, values);
                 console.log(response);
 
                 setOpen(true);
