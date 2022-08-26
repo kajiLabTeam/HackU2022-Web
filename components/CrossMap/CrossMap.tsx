@@ -17,6 +17,8 @@ L.Icon.Default.mergeOptions({
 interface Position {
   lat: number;
   lon: number;
+  gender?: number;
+  age?: string;
 }
 
 // interface positions {
@@ -50,7 +52,18 @@ const CrossMap = ({ positions = tmpPoses }: { positions?: Position[] }) => {
         />
         {positions.map((value, index) => (
           <Marker position={[value.lat, value.lon]} key={Math.random()}>
-            {/* <Popup>{index + 1}</Popup> */}
+            <Popup>
+              <h1>
+                {value.gender && value.gender === 1
+                  ? "性別：男性"
+                  : value.gender === 2
+                  ? "性別：女性"
+                  : value.gender === 3
+                  ? "性別：その他"
+                  : ""}
+              </h1>
+              <h1>{value.age && value.age + "歳"}</h1>
+            </Popup>
           </Marker>
         ))}
       </MapContainer>

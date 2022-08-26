@@ -11,7 +11,7 @@ import {
 
 import useSWR from "swr";
 
-import { Like, Coordinate } from "../../types";
+import { Like, Coordinate, User } from "../../types";
 
 const UserPage: NextPage = () => {
   const router = useRouter();

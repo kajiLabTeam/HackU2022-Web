@@ -10,8 +10,17 @@ import { useRouter } from "next/router";
 import { Like, Coordinate, User } from "../../../types";
 import useSWR from "swr";
 
+interface SendUser {
+  gender: number;
+  age: string;
+}
+
+//ここに追加していく感じ
+const sendUsersInfo: SendUser[] = [{ gender: 1, age: "21~25" }];
+
 const DetailsPage: NextPage = () => {
   const router = useRouter();
+  // const [sendUsers, setSendUsers] = React.useState(sendUsersInfo);  //さっきまでいじってたとこ
 
   const { data: likes } = useSWR<Like[]>(
     `/coordinates/${router.query.coordinateId}/likes`
@@ -22,6 +31,20 @@ const DetailsPage: NextPage = () => {
   );
 
   const { data: user } = useSWR<User>(`/users/${coordinate?.user_id}`);
+
+  // const { data: coordinates } = useSWR<Coordinate[]>(
+  //   `/users/${router.query.userId}/coordinates`
+  // );
+
+  //さっきまでいじってたとこ
+  // likes?.map((value, index) => {
+  //   const { data: send_user } = useSWR<User>(`/users/${value.send_user_id}`);
+  //   let sendUserInfo: SendUser = {
+  //     gender: send_user?.gender,
+  //     age: send_user?.age,
+  //   };
+  //   sendUsers.push([send_user?.gender, send_user?.age]);
+  // });
 
   return (
     <Box>
@@ -69,67 +92,45 @@ const DetailsPage: NextPage = () => {
                 variant="h5"
                 sx={{ marginTop: "25px", marginLeft: "10px" }}
               >
-                {user && user.gender === 1
+                {(() => {
+                  if (user) {
+                    if (router.query.userId !== coordinate?.user_id) {
+                      if (user.gender === 1) return "男性";
+                      else if (user.gender === 2) return "女性";
+                      else return "その他";
+                    } else return "あなたの投稿です";
+                  }
+                })()}
+
+                {/* {user && user.gender === 1
                   ? "男性"
                   : user && user.gender === 2
                   ? "女性"
-                  : "その他"}
+                  : user && user.gender === 3
+                  ? "その他"
+                  : ""} */}
               </Typography>
               <Typography
                 variant="h5"
                 sx={{ marginTop: "8px", marginLeft: "10px" }}
               >
-                {user && user.height}cm
+                {user &&
+                  router.query.userId !== coordinate?.user_id &&
+                  user.height + "cm"}
+                {/* {user && user.height}cm */}
               </Typography>
               <Typography
                 variant="h5"
                 sx={{ marginTop: "8px", marginLeft: "10px" }}
               >
-                {user && user.age}歳
+                {user &&
+                  router.query.userId !== coordinate?.user_id &&
+                  user.age + "歳"}
+                {/* {user && user.age}歳 */}
               </Typography>
             </Box>
           </Grid>
         </Grid>
-
-        {/* <Box sx={{ display: "flex", marginTop: "20px" }}>
-          <img
-            src={coordinate && coordinate.image}
-            width="300vx"
-            // height="100vw"
-          ></img>
-
-          <Box sx={{ margin: "30px", marginLeft: "3vw" }}>
-            <Typography variant="h3" sx={{ display: "flex" }}>
-              {likes && likes.length}
-              <Typography variant="h5" sx={{ marginTop: "22px" }}>
-                いいね
-              </Typography>
-            </Typography>
-
-            <Typography
-              variant="h5"
-              sx={{ marginTop: "25px", marginLeft: "10px" }}
-            >
-              {user && user.gender === 1
-                ? "男性"
-                : user && user.gender === 2
-                ? "女性"
-                : "その他"}
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{ marginTop: "8px", marginLeft: "10px" }}
-            >
-              {user && user.height}cm
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{ marginTop: "8px", marginLeft: "10px" }}
-            >
-              {user && user.age}歳
-            </Typography>
-          </Box>
-        </Box> */}
       </Container>
 
       <SimpleBottomNavigation
@@ -145,3 +146,13 @@ const DetailsPage: NextPage = () => {
 };
 
 export default DetailsPage;
+
+//比較のときに役に立つサイト https://qiita.com/akifumii/items/c302fdc633d8eba2af0a
+
+//<div>
+//  {(() => {
+//    if (true) {
+//      return "hello world";
+//    }
+//  })()}
+//</div>;

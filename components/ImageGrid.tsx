@@ -1,6 +1,7 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+// import Grid from "@mui/material/Grid";
+// import Paper from "@mui/material/Paper";
+import { Grid, Paper, Typography } from "@mui/material";
 
 import { useRouter } from "next/router";
 
@@ -56,7 +57,26 @@ export const CoordinateCard = ({ imageURL, link }: CoordinateCardProps) => {
         router.push(link ?? "/");
       }}
     >
-      <img src={imageURL ?? "代替えURL"} width="100%" height="100%" />
+      <img src={imageURL ?? "代替えURL"} width="100%" height="92%" />
+      <Typography
+        variant="h5"
+        color="inherit"
+        component="div"
+        //sx={{ textAline: "right" }}
+        sx={{
+          marginLeft: "285px",
+          marginTop: "0px",
+          display: "inline-block",
+        }}
+      >
+        💖
+      </Typography>
+      <Typography
+        variant="h4"
+        sx={{ display: "inline-block", marginLeft: "4px" }}
+      >
+        3
+      </Typography>
     </Paper>
   );
 };
