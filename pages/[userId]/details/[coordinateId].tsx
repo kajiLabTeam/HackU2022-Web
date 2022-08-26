@@ -20,7 +20,6 @@ const sendUsersInfo: SendUser[] = [{ gender: 1, age: "21~25" }];
 
 const DetailsPage: NextPage = () => {
   const router = useRouter();
-  // const [sendUsers, setSendUsers] = React.useState(sendUsersInfo);  //さっきまでいじってたとこ
 
   const { data: likes } = useSWR<Like[]>(
     `/coordinates/${router.query.coordinateId}/likes`
@@ -35,20 +34,6 @@ const DetailsPage: NextPage = () => {
   const { data: sendUsers } = useSWR<User[]>(
     `/coordinates/${router.query.coordinateId}/likes/senduser/users`
   );
-
-  // const { data: coordinates } = useSWR<Coordinate[]>(
-  //   `/users/${router.query.userId}/coordinates`
-  // );
-
-  //さっきまでいじってたとこ
-  // likes?.map((value, index) => {
-  //   const { data: send_user } = useSWR<User>(`/users/${value.send_user_id}`);
-  //   let sendUserInfo: SendUser = {
-  //     gender: send_user?.gender,
-  //     age: send_user?.age,
-  //   };
-  //   sendUsers.push([send_user?.gender, send_user?.age]);
-  // });
 
   return (
     <Box>
