@@ -1,3 +1,4 @@
+//  https://nextjs.org/
 import React from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -11,32 +12,10 @@ import {
   AlertColor,
   Box,
 } from "@mui/material";
-import { CustomAppBar, SimpleBottomNavigation } from "../components";
+import { CustomAppBar } from "../components";
 import axios from "axios";
 
 const tmpMail: string = "serina@aitech.ac.jp";
-const tmpValue = {
-  name: "fuma",
-  ble: "qawse",
-  icon: "https://res.cloudinary.com/fuma",
-  gender: 1,
-  age: "20〜25",
-  height: 175,
-  mail: "fuma@aitech.ac.jp",
-};
-
-interface Tmp {
-  id: string;
-  ble: string;
-  mail: string;
-  name: string;
-  gender: number;
-  age: string;
-  height: number;
-  icon: string;
-  created_at: Date;
-  update_at: Date;
-}
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -76,14 +55,10 @@ const Home: NextPage = () => {
             onClick={async () => {
               try {
                 const url = `https://xclothes.harutiro.net/users/mail/${eMail}`;
-                //const url = "https://xclothes.harutiro.net/users";
 
                 const response = await axios.get(url);
                 console.log(response);
-                //console.log(response.data.id);
-                //router.replace("/addCoordinate"); // 登録後の遷移先
 
-                //router.replace(`/${response.data.id}`); // 登録後の遷移先
                 router.push({
                   pathname: `/${response.data.id}`, //URL
                   query: { moveId: response.data.id }, //検索クエリ
@@ -103,24 +78,7 @@ const Home: NextPage = () => {
             ログイン
           </Button>
 
-          {/* <Button
-            variant="contained"
-            onClick={async () => {
-              try {
-                const url = "https://xclothes.harutiro.net/users/signup";
-                const response: Tmp = await axios.post(url, tmpValue);
-                console.log(response);
-                router.replace("/addCoordinate"); // 登録後の遷移先
-              } catch (e) {
-                console.error(e);
-              }
-            }}
-          >
-            postのテスト
-          </Button> */}
-
           <pre>{JSON.stringify(eMail, null, 2)}</pre>
-          {/* <pre>{JSON.stringify(tmpValue, null, 2)}</pre> */}
         </Stack>
       </Container>
       {/* <SimpleBottomNavigation /> */}
@@ -144,7 +102,7 @@ const Home: NextPage = () => {
 
 export default Home;
 
-/*
+/*//これは消さずに残しておきたい
 onClick={() => {
             //console.log("kita");
             router.push({

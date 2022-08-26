@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 // export const SimpleBottomNavigation = (
 //   pageNum: { pageNum?: number },
 //   { user_id = "aaa" }: { user_id: string }
+
 export const SimpleBottomNavigation = ({
   pageNum,
   user_id,
@@ -31,8 +32,6 @@ export const SimpleBottomNavigation = ({
     const [value, setValue] = React.useState(pageNum);
     const ref = React.useRef<HTMLDivElement>(null);
     const router = useRouter();
-
-    //if (user_id === "error") router.replace("../.././");
 
     return (
       <Box sx={{ pb: 7 }} ref={ref}>
@@ -56,7 +55,7 @@ export const SimpleBottomNavigation = ({
                 //} else {
 
                 //router.replace("../.././addCoordinate");
-
+                if (user_id === "error") router.replace("../.././");
                 router.push({
                   pathname: "../.././addCoordinate", //URL
                   query: { moveId: user_id }, //検索クエリ
@@ -72,6 +71,7 @@ export const SimpleBottomNavigation = ({
                 //  router.replace("./profile");
                 //} else {
                 //router.replace("../.././profile");
+                if (user_id === "error") router.replace("../.././");
                 router.push({
                   pathname: "../.././profile", //URL
                   query: { moveId: user_id }, //検索クエリ
@@ -88,6 +88,7 @@ export const SimpleBottomNavigation = ({
                 //  router.replace(`./${user_id ?? ""}`);
                 //} else {
                 //router.replace(`../.././${user_id ?? ""}`);
+                if (user_id === "error") router.replace("../.././");
                 router.push({
                   pathname: `../.././${user_id}`, //URL
                   query: { moveId: user_id }, //検索クエリ
@@ -104,6 +105,7 @@ export const SimpleBottomNavigation = ({
                 //  router.replace("./nationalMap");
                 //} else {
                 //router.replace("../.././nationalMap");
+                if (user_id === "error") router.replace("../.././");
                 router.push({
                   pathname: "../.././nationalMap", //URL
                   query: { moveId: user_id }, //検索クエリ

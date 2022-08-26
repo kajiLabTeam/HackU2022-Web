@@ -1,7 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import Image from "next/image";
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import {
   CustomAppBar,
   SimpleBottomNavigation,
@@ -10,11 +9,6 @@ import {
 import { useRouter } from "next/router";
 import { Like, Coordinate, User } from "../../../types";
 import useSWR from "swr";
-
-const likesCount: number = 12;
-const age: number = 20;
-const gender: number = 2;
-const personHeight: number = 160;
 
 const DetailsPage: NextPage = () => {
   const router = useRouter();
@@ -30,23 +24,17 @@ const DetailsPage: NextPage = () => {
   const { data: user } = useSWR<User>(`/users/${coordinate?.user_id}`);
 
   return (
-    // <Box sx={{ textAlign: "center" }}>
     <Box>
       <CustomAppBar title="評価の詳細" />
 
-      <h1>1:{router.query.userId}</h1>
-      <h1>2:{router.query.coordinateId}</h1>
+      {/* <h1>1:{router.query.userId}</h1>
+      <h1>2:{router.query.coordinateId}</h1> */}
 
       <CrossMap />
 
       {/* <Container maxWidth="sm"> */}
       <Container maxWidth="md">
         <Box sx={{ display: "flex", marginTop: "20px" }}>
-          {/* <Image
-            src="https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg"
-            width="50vw"
-            height="50vw"
-          ></Image> */}
           <Box sx={{ marginLeft: "5vw" }}>
             <img
               src={coordinate && coordinate.image}
@@ -86,16 +74,10 @@ const DetailsPage: NextPage = () => {
             </Typography>
           </Box>
         </Box>
-        {/*
-          <Typography variant="h4">
-            coordinateId: {router.query.coordinateId}
-          </Typography>
-          */}
-        {/*上のやつでURLに入った値を呼び出せる.消すな*/}
       </Container>
 
       <SimpleBottomNavigation
-        //pageNum={2}
+        //pageNum={99}
         user_id={
           typeof router.query.userId === "string"
             ? router.query.userId

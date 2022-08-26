@@ -3,8 +3,6 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import {
   Button,
-  Switch,
-  FormControlLabel,
   Stack,
   TextField,
   Container,
@@ -16,38 +14,15 @@ import {
   Box,
   AlertColor,
 } from "@mui/material";
-
 import {
   CustomAppBar,
-  ClothesInput,
   CloudinaryUpload,
   SimpleBottomNavigation,
   RadioButtonsGroup,
 } from "../components";
 import axios from "axios";
-
-import useSWR, { useSWRConfig } from "swr";
-
-const initialState = {
-  imageURL: "",
-  name: "nanashi",
-  gender: "2", //1,男 2,女 3,その他
-  height: "160",
-  age: "20",
-};
-
-interface UserData {
-  id: string;
-  ble: string;
-  mail: string;
-  name: string;
-  gender: number;
-  age: string;
-  height: number;
-  icon: string;
-  created_at?: Date;
-  update_at?: Date;
-}
+import useSWR from "swr";
+import { User } from "../types";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -64,25 +39,23 @@ const Home: NextPage = () => {
     setOpen(false);
   };
 
-  const { data: userData } = useSWR<UserData>(`/users/${router.query.moveId}`, {
-    //const { data: userData } = useSWR<UserData>("/users/-0MlNSjap", {
+  const { data: user } = useSWR<User>(`/users/${router.query.moveId}`, {
     revalidateOnFocus: false,
   });
-  const [formValue, setFormValue] = React.useState<UserData>();
+  const [formValue, setFormValue] = React.useState<User>();
   React.useEffect(() => {
-    userData && setFormValue(userData);
-  }, [userData]);
+    user && setFormValue(user);
+  }, [user]);
 
   return (
     <>
-      {/* <h1>user_id:{router.query.userId}</h1> */}
       <CustomAppBar title="プロフィール更新" />
 
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
             beforeImaheURL={formValue?.icon}
-            onChange={(e) => userData && setFormValue({ ...userData, icon: e })}
+            onChange={(e) => user && setFormValue({ ...user, icon: e })}
           />
           <TextField
             id="standard-basic"
@@ -90,13 +63,13 @@ const Home: NextPage = () => {
             variant="standard"
             value={formValue?.name ?? ""}
             onChange={(e) => {
-              userData && setFormValue({ ...userData, name: e.target.value });
+              user && setFormValue({ ...user, name: e.target.value });
             }}
           />
           <RadioButtonsGroup
             value={formValue?.gender}
             onChange={(e) => {
-              userData && setFormValue({ ...userData, gender: e });
+              user && setFormValue({ ...user, gender: e });
             }}
           />
           <TextField
@@ -110,8 +83,7 @@ const Home: NextPage = () => {
             variant="standard"
             onChange={(e) => {
               const tmpHeight = e.target.value;
-              userData &&
-                setFormValue({ ...userData, height: Number(tmpHeight) });
+              user && setFormValue({ ...user, height: Number(tmpHeight) });
             }}
           />
           <FormControl fullWidth>
@@ -125,7 +97,7 @@ const Home: NextPage = () => {
                 id: "uncontrolled-native",
               }}
               onChange={(e) => {
-                userData && setFormValue({ ...userData, age: e.target.value });
+                user && setFormValue({ ...user, age: e.target.value });
               }}
             >
               <option value="~10">~10</option>
@@ -151,7 +123,7 @@ const Home: NextPage = () => {
                 const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
                 const response = await axios.put(url, formValue);
                 console.log(response);
-                //router.replace("/hoge"); // 登録後の遷移先
+
                 setOpen(true);
                 setSeverity("success");
                 setMessage("更新しました");

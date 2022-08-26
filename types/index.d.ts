@@ -20,10 +20,10 @@ export interface Wear extends ModelBase {
 }
 
 export interface Coordinate extends ModelBase {
+  put_flag?: boolean;
   public: boolean;
   image: string;
-  ble: string;
-  user_id?: string;
+  user_id: string;
   wears: Wear[];
 }
 

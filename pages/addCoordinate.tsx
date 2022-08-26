@@ -1,5 +1,3 @@
-//  https://nextjs.org/
-
 import React from "react";
 import type { NextPage } from "next";
 import {
@@ -19,29 +17,13 @@ import {
   SimpleBottomNavigation,
 } from "../components";
 import axios from "axios";
-import { FlashlightOnTwoTone } from "@mui/icons-material";
-import { info } from "console";
 import { useRouter } from "next/router";
-
-import { Like, User } from "../types";
-import useSWR from "swr";
-
-interface wear {
-  category: string;
-  brand: string;
-  price: string;
-}
-
-interface Coordinate {
-  public: boolean;
-  image: string;
-  user_id: string;
-  wears: wear[];
-}
+import { Coordinate } from "../types";
 
 const initialState: Coordinate = {
   public: false,
-  image: "",
+  image:
+    "https://res.cloudinary.com/dhbnknlos/image/upload/v1661490750/My%20Uploads/kvb8nlautggnhlqmvw7u.jpg",
   user_id: "",
   wears: [{ category: "トップス", brand: "ユニクロ", price: "0~1000" }],
 };
@@ -49,9 +31,7 @@ const initialState: Coordinate = {
 const Home: NextPage = () => {
   //router設定
   const router = useRouter();
-  //const { data: user } = useSWR<User>(`/users/${router.query.moveId}`);
 
-  //const [values, setValues] = React.useState(initialState);
   initialState.user_id =
     typeof router.query.moveId === "string" ? router.query.moveId : "error";
 
@@ -91,14 +71,11 @@ const Home: NextPage = () => {
                 ? "すれちがった人以外にも服を公開する"
                 : "すれ違った人にのみ服を公開する"
             }
-            // label="すれちがった人以外にも服を公開する"
           />
+
           <ClothesInput
-            //value={values.clothes}
             value={values?.wears}
             onChange={(v) => setValues({ ...values, wears: v })}
-            //valuesの中のclothesの中に、vの値を入れている
-            // ->　vの値の中身がわかれば良い
           />
 
           <Button
@@ -106,7 +83,7 @@ const Home: NextPage = () => {
             onClick={async () => {
               try {
                 const url = "https://xclothes.harutiro.net/coordinates";
-                //const url = "/coordinates";
+
                 const response = await axios.post(url, values);
                 console.log(response);
 
@@ -151,25 +128,7 @@ const Home: NextPage = () => {
       </Snackbar>
 
       {/* デバッグよう */}
-      <pre>{JSON.stringify(values, null, 2)}</pre>
-
-      {/*
-          <TextField
-            label="ここにタイトル"
-            variant="outlined"
-            value={values.title}
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
-          />
-          <TextField
-            label="ここに文章"
-            multiline
-            rows={4}
-            variant="outlined"
-            onChange={(e) =>
-              setValues({ ...values, description: e.target.value })
-            }
-          />
-          */}
+      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
     </>
   );
 };
