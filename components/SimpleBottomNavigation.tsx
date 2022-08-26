@@ -31,6 +31,9 @@ export const SimpleBottomNavigation = ({
     const [value, setValue] = React.useState(pageNum);
     const ref = React.useRef<HTMLDivElement>(null);
     const router = useRouter();
+
+    //if (user_id === "error") router.replace("../.././");
+
     return (
       <Box sx={{ pb: 7 }} ref={ref}>
         <Paper

@@ -27,7 +27,7 @@ const DetailsPage: NextPage = () => {
     `/coordinates/${router.query.coordinateId}`
   );
 
-  const { data: user } = useSWR<User>(`/users/${router.query.userId}`);
+  const { data: user } = useSWR<User>(`/users/${coordinate?.user_id}`);
 
   return (
     // <Box sx={{ textAlign: "center" }}>

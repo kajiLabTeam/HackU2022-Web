@@ -14,7 +14,7 @@ import {
 import { CustomAppBar, SimpleBottomNavigation } from "../components";
 import axios from "axios";
 
-const tmpMail: string = "yada@aitech.ac.jp";
+const tmpMail: string = "serina@aitech.ac.jp";
 const tmpValue = {
   name: "fuma",
   ble: "qawse",

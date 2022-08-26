@@ -171,7 +171,7 @@ const Home: NextPage = () => {
         </Stack>
       </Container>
       <SimpleBottomNavigation
-        pageNum={0}
+        pageNum={1}
         user_id={
           typeof router.query.moveId === "string"
             ? router.query.moveId
