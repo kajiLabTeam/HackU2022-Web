@@ -1,7 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import { Box, Container, Grid, Typography, Paper } from "@mui/material";
-import Image from "next/image";
+import { Box, Container } from "@mui/material";
 import { useRouter } from "next/router";
 import {
   CustomAppBar,
@@ -12,50 +11,59 @@ import {
 
 import useSWR from "swr";
 
-interface Like {
-  id: string;
-  lat: number;
-  lon: number;
-  send_user_id: string;
-  receive_user_id: string;
-  coordinate_id: string;
-  created_at: Date;
-  update_at: Date;
-}
-
-const tmpImages = [
-  "https://res.cloudinary.com/dificqqyf/image/upload/v1661253712/kez6ljjzjzwfkh5fedpa.jpg",
-  "https://res.cloudinary.com/dificqqyf/image/upload/v1661255156/Screenshot_from_2022-08-23_19-06-56_r8trfu.png",
-];
+import { Like, Coordinate } from "../../types";
 
 const UserPage: NextPage = () => {
   const router = useRouter();
 
-  //swrの解説
+  //swrの解説 ここでget
   //https://swr.vercel.app/ja/docs/global-configuration
-  const { data } = useSWR<Like[]>(
-    `/likes?receive_user_id=${router.query.userId}`
-    //"/ping"
+  const { data: likes } = useSWR<Like[]>(`/likes/${router.query.userId}/likes`);
+
+  const { data: coordinates } = useSWR<Coordinate[]>(
+    `/users/${router.query.userId}/coordinates`
   );
 
   return (
     <Box>
+      {/* <h1>user_id:{router.query.userId}</h1> */}
       <CustomAppBar title="X clothes" />
       <Box sx={{ width: "100vw" }}>
-        <CrossMap />
+        <CrossMap
+          positions={
+            (likes &&
+              likes.map((like) => {
+                return { lat: like.lat, lon: like.lon };
+              })) ??
+            []
+          }
+        />
       </Box>
 
       <Container maxWidth="lg" sx={{ padding: 6 }}>
-        <ImageGrid />
-        {/*
-        CoordinateCardProps[]=[
-        imageURL そのままのurl
-        link =`${userid}/details/${clossId}`
-        ]
-        */}
+        <ImageGrid
+          CoordinateCardProp={
+            (coordinates &&
+              coordinates.map((coordinate) => {
+                return {
+                  imageURL: coordinate.image,
+                  link: `${router.query.moveId}/details/${coordinate.id}`,
+                };
+              })) ??
+            []
+          }
+        />
       </Container>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      <SimpleBottomNavigation pageNum={2} />
+
+      {/* <pre>{JSON.stringify(coordinates, null, 2)}</pre> */}
+      <SimpleBottomNavigation
+        pageNum={2}
+        user_id={
+          typeof router.query.userId === "string"
+            ? router.query.userId
+            : "error"
+        }
+      />
     </Box>
   );
 };

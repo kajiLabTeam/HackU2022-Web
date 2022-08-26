@@ -7,23 +7,23 @@ import {
 } from "@mui/material";
 // icons
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 import { useRouter } from "next/router";
 
-//const CrossMap = ({ positions = tmpPoses }: { positions?: position[] }) => {
-
-export const SimpleBottomNavigation = (
-  pageNum: { pageNum?: number },
-  user_id: { user_id?: string }
-  //detailPageFlg: { detailPageFlg?: boolean }
-) => {
-  const [value, setValue] = React.useState(pageNum.pageNum);
+export const SimpleBottomNavigation = ({
+  pageNum,
+  user_id,
+}: {
+  pageNum?: number;
+  user_id: string;
+}) => {
+  const [value, setValue] = React.useState(pageNum);
   const ref = React.useRef<HTMLDivElement>(null);
   const router = useRouter();
+
   return (
     <Box sx={{ pb: 7 }} ref={ref}>
       <Paper
@@ -44,7 +44,13 @@ export const SimpleBottomNavigation = (
               //if (detailPageFlg ?? false) {
               //  router.replace("./");
               //} else {
-              router.replace("../.././");
+
+              //router.replace("../.././addCoordinate");
+              if (user_id === "error") router.replace("../.././");
+              router.push({
+                pathname: "../.././addCoordinate", //URL
+                query: { moveId: user_id }, //検索クエリ
+              });
               //}
             }}
           />
@@ -55,7 +61,12 @@ export const SimpleBottomNavigation = (
               //if (detailPageFlg ?? false) {
               //  router.replace("./profile");
               //} else {
-              router.replace("../.././profile");
+              //router.replace("../.././profile");
+              if (user_id === "error") router.replace("../.././");
+              router.push({
+                pathname: "../.././profile", //URL
+                query: { moveId: user_id }, //検索クエリ
+              });
               //}
             }}
           />
@@ -67,7 +78,12 @@ export const SimpleBottomNavigation = (
               //if (detailPageFlg ?? false) {
               //  router.replace(`./${user_id ?? ""}`);
               //} else {
-              router.replace(`../.././${user_id ?? ""}`);
+              //router.replace(`../.././${user_id ?? ""}`);
+              if (user_id === "error") router.replace("../.././");
+              router.push({
+                pathname: `../.././${user_id}`, //URL
+                query: { moveId: user_id }, //検索クエリ
+              });
               //}
             }}
           />
@@ -79,7 +95,12 @@ export const SimpleBottomNavigation = (
               //if (detailPageFlg ?? false) {
               //  router.replace("./nationalMap");
               //} else {
-              router.replace("../.././nationalMap");
+              //router.replace("../.././nationalMap");
+              if (user_id === "error") router.replace("../.././");
+              router.push({
+                pathname: "../.././nationalMap", //URL
+                query: { moveId: user_id }, //検索クエリ
+              });
               //}
             }}
           />
@@ -89,3 +110,20 @@ export const SimpleBottomNavigation = (
     </Box>
   );
 };
+
+/*
+onClick={() => {
+  router.push({
+    pathname: "../.././profile", //URL
+    query: { moveId: user_id }, //検索クエリ
+    });
+}}
+
+上の受け取る形
+{router.query.moveId}
+
+
+
+/hoge    のなかの hoge が受け取れる
+router.query.userId
+*/

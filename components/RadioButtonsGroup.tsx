@@ -6,22 +6,24 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 export interface GenderInputProps {
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: number;
+  onChange?: (value: number) => void;
 }
 
 export const RadioButtonsGroup = ({ value, onChange }: GenderInputProps) => {
-  const [values, setValues] = React.useState("");
+  const [values, setValues] = React.useState(value);
   return (
     <FormControl>
       <FormLabel id="demo-radio-buttons-group-label">性別</FormLabel>
       <RadioGroup
         onChange={(event) => {
-          onChange && onChange(event.target.value);
-          setValues(event.target.value);
+          const gender = event.target.value;
+          const genNum: number = gender === "1" ? 1 : gender === "2" ? 2 : 3;
+          onChange && onChange(genNum);
+          setValues(genNum);
         }}
         aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="2"
+        value={value === 1 ? "1" : value === 2 ? "2" : "3"}
         name="radio-buttons-group"
       >
         <FormControlLabel value="2" control={<Radio />} label="女" />

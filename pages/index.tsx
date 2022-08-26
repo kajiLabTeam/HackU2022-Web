@@ -1,42 +1,25 @@
 //  https://nextjs.org/
-
 import React from "react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import {
   Button,
-  Switch,
-  FormControlLabel,
   Stack,
+  TextField,
   Container,
-  AlertColor,
   Snackbar,
   Alert,
+  AlertColor,
+  Box,
 } from "@mui/material";
-import {
-  CustomAppBar,
-  ClothesInput,
-  CloudinaryUpload,
-  SimpleBottomNavigation,
-} from "../components";
+import { CustomAppBar } from "../components";
 import axios from "axios";
-import { FlashlightOnTwoTone } from "@mui/icons-material";
 
-const initialState = {
-  imageURL: "",
-  public: false,
-  clothes: [
-    {
-      category: "トップス",
-      brand: "uniqlo",
-      price: "0~1000",
-    },
-  ],
-  title: "",
-  description: "",
-};
+const tmpMail: string = "serina@aitech.ac.jp";
 
 const Home: NextPage = () => {
-  const [values, setValues] = React.useState(initialState);
+  const router = useRouter();
+  const [eMail, setEMail] = React.useState(tmpMail);
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState<AlertColor>("info");
   const [message, setMessage] = React.useState("");
@@ -47,85 +30,58 @@ const Home: NextPage = () => {
     if (reason === "clickaway") return;
     setOpen(false);
   };
+
   return (
     <>
-      <CustomAppBar title="服登録" />
+      {/* <h1>user_id:{router.query.userId}</h1> */}
+      <CustomAppBar title="ログイン" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
-          <CloudinaryUpload
-            onChange={(imgUrl) => setValues({ ...values, imageURL: imgUrl })}
-          />
-          <FormControlLabel
-            control={
-              <Switch
-                onChange={() =>
-                  setValues({ ...values, public: !values.public })
-                }
-              />
-            }
-            label="すれちがった人以外にも服を公開する"
-          />
-          <ClothesInput
-            value={values.clothes}
-            onChange={(v) => setValues({ ...values, clothes: v })}
-            //valuesの中のclothesの中に、vの値を入れている
-            // ->　vの値の中身がわかれば良い
-          />
-          {/*
+          <Box></Box>
+          <Box></Box>
           <TextField
-            label="ここにタイトル"
-            variant="outlined"
-            value={values.title}
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
+            id="standard-basic"
+            label="e-mail"
+            variant="standard"
+            // value={values.name}
+            onChange={(e) => setEMail(e.target.value)}
           />
-          <TextField
-            label="ここに文章"
-            multiline
-            rows={4}
-            variant="outlined"
-            onChange={(e) =>
-              setValues({ ...values, description: e.target.value })
-            }
-          />
-          */}
+
+          <Box></Box>
+          <Box></Box>
+
           <Button
             variant="contained"
             onClick={async () => {
               try {
-                const url = "服登録のURL";
-                const response = await axios.post(url, values);
+                const url = `https://xclothes.harutiro.net/users/mail/${eMail}`;
+
+                const response = await axios.get(url);
                 console.log(response);
-                //router.replace("/hoge"); // 登録後の遷移先
+
+                router.push({
+                  pathname: `/${response.data.id}`, //URL
+                  query: { moveId: response.data.id }, //検索クエリ
+                });
+
+                setOpen(true);
+                setSeverity("success");
+                setMessage("ログインに成功しました");
               } catch (e) {
                 console.error(e);
+                setOpen(true);
+                setSeverity("error");
+                setMessage("ログインに失敗しました");
               }
             }}
           >
-            登録
+            ログイン
           </Button>
 
-          <Button
-            onClick={() => {
-              setOpen(true);
-              setSeverity("success");
-              setMessage("登録しました");
-            }}
-          >
-            成功した時
-          </Button>
-          <Button
-            onClick={() => {
-              setOpen(true);
-              setSeverity("error");
-              setMessage("登録に失敗しました");
-            }}
-          >
-            失敗した時
-          </Button>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          <pre>{JSON.stringify(eMail, null, 2)}</pre>
         </Stack>
       </Container>
-      <SimpleBottomNavigation pageNum={0} />
+      {/* <SimpleBottomNavigation /> */}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
@@ -145,3 +101,21 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+/*//これは消さずに残しておきたい
+onClick={() => {
+            //console.log("kita");
+            router.push({
+              pathname: "/evaluationDetails", //URL
+              query: { input: id }, //検索クエリ
+            });
+          }}
+
+上の受け取る形
+{router.query.input}
+
+
+
+/hoge    のなかの hoge が受け取れる
+router.query.userId
+*/

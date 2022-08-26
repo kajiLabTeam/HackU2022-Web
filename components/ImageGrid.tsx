@@ -1,6 +1,7 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+
 import { useRouter } from "next/router";
 
 export interface CoordinateCardProps {
@@ -29,7 +30,7 @@ export const ImageGrid = ({
   return (
     <Grid container spacing={2}>
       {CoordinateCardProp.map((value, index) => (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4} key={Math.random()}>
           <CoordinateCard imageURL={value.imageURL} link={value.link} />
         </Grid>
       ))}
@@ -44,7 +45,7 @@ export const CoordinateCard = ({ imageURL, link }: CoordinateCardProps) => {
     <Paper
       sx={{
         width: "100%",
-        height: "320px",
+        height: "500px",
         overflow: "hidden",
         // 参考になるページ
         // https://developer.mozilla.org/ja/docs/Web/CSS/filter

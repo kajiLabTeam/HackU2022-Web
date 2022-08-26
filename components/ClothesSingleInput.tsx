@@ -12,13 +12,17 @@ const categoryList: CustomSelectItem[] = [
 ];
 
 const brandList: CustomSelectItem[] = [
-  { text: "ユニクロ", value: "uniqlo" },
-  { text: "GAP", value: "gap" },
-  { text: "GU", value: "gu" },
-  { text: "BEAMS", value: "beams" },
-  { text: "Paul Smith", value: "paul-smith" },
-  { text: "ZARA", value: "zara" },
-  { text: "RAGEBLUE", value: "rageblue" },
+  { text: "ユニクロ", value: "ユニクロ" },
+  { text: "GAP", value: "GAP" },
+  { text: "GU", value: "GU" },
+  { text: "BEAMS", value: "BEAMS" },
+  { text: "Paul Smith", value: "Paul Smith" },
+  { text: "ZARA", value: "ZARA" },
+  { text: "RAGEBLUE", value: "RAGEBLUE" },
+  { text: "Right-on", value: "Right-on" },
+  { text: "h&m", value: "h&m" },
+  { text: "無印良品", value: "無印良品" },
+  { text: "WEGO", value: "WEGO" },
   { text: "その他", value: "その他" },
 ];
 
@@ -33,7 +37,7 @@ const priceList: CustomSelectItem[] = [
 
 const initialState: Clothes = {
   category: "トップス",
-  brand: "uniqlo",
+  brand: "ユニクロ",
   price: "0~1000",
 };
 
