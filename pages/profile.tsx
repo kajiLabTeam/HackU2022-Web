@@ -111,7 +111,6 @@ const Home: NextPage = () => {
               <option value="46~50">46~50</option>
               <option value="51~55">51~55</option>
               <option value="56~60">56~60</option>
-              <option value="56~60">56~60</option>
               <option value="61~">61~</option>
             </NativeSelect>
           </FormControl>

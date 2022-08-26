@@ -33,13 +33,15 @@ export const CustomAppBar = ({ title }: CustomAppBarProps) => {
             <MenuIcon />
           </IconButton> */}
           <Typography
-            variant="h6"
+            variant="h5"
             color="inherit"
             component="div"
             sx={{ marginLeft: "20px" }}
           >
             {title}
           </Typography>
+          <div style={{ flexGrow: 1 }}></div>
+          <Typography variant="overline">by HACK × FAMILY</Typography>
         </Toolbar>
       </AppBar>
     </Box>

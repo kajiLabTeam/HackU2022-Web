@@ -10,6 +10,8 @@ import {
   Snackbar,
   Alert,
   ThemeProvider,
+  Box,
+  Typography,
 } from "@mui/material";
 import {
   CustomAppBar,
@@ -61,6 +63,11 @@ const Home: NextPage = () => {
             beforeImaheURL={values?.image}
             onChange={(v) => setValues({ ...values, image: v })}
           />
+
+          <Typography variant="subtitle2" sx={{ marginLeft: "30%" }}>
+            ※顔が写っていない写真を使用してください
+          </Typography>
+
           <FormControlLabel
             control={
               <Switch

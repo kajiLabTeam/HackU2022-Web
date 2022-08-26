@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST={"../components/CrossMap/index.tsx -> ./CrossMap":{"id":"../components/CrossMap/index.tsx -> ./CrossMap","files":["static/chunks/components_CrossMap_CrossMap_tsx.js"]}}
