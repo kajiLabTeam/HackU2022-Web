@@ -9,6 +9,7 @@ import {
   AlertColor,
   Snackbar,
   Alert,
+  ThemeProvider,
 } from "@mui/material";
 import {
   CustomAppBar,
@@ -16,6 +17,7 @@ import {
   CloudinaryUpload,
   SimpleBottomNavigation,
 } from "../components";
+import ChangeColor from "../components/ChangeColor";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Coordinate } from "../types";
@@ -51,6 +53,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      {/* <ThemeProvider theme={ChangeColor}> */}
       <CustomAppBar title="服登録" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
@@ -129,6 +132,7 @@ const Home: NextPage = () => {
 
       {/* デバッグよう */}
       {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+      {/* </ThemeProvider> */}
     </>
   );
 };

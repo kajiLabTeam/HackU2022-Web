@@ -43,7 +43,7 @@ export const CloudinaryUpload = ({
           backgroundColor: "gray",
           width: "128px", //"128px" "35vw"
           height: "128px",
-          // borderRadius: "64px", //"64px" "2vw"
+          borderRadius: "5px", //"64px" "2vw"
           overflow: "hidden",
         }}
       >

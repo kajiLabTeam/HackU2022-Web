@@ -1,6 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import {
   CustomAppBar,
   SimpleBottomNavigation,
@@ -30,18 +30,74 @@ const DetailsPage: NextPage = () => {
       {/* <h1>1:{router.query.userId}</h1>
       <h1>2:{router.query.coordinateId}</h1> */}
 
-      <CrossMap />
+      <CrossMap
+        positions={
+          (likes &&
+            likes.map((like) => {
+              return { lat: like.lat, lon: like.lon };
+            })) ??
+          []
+        }
+      />
 
       {/* <Container maxWidth="sm"> */}
+      <Box height="2em"></Box>
       <Container maxWidth="md">
-        <Box sx={{ display: "flex", marginTop: "20px" }}>
-          <Box sx={{ marginLeft: "5vw" }}>
-            <img
-              src={coordinate && coordinate.image}
-              width="300vx"
-              // height="100vw"
-            ></img>
-          </Box>
+        <Grid container spacing={5}>
+          <Grid item xs={12} sm={6} key={Math.random()}>
+            <Box sx={{ marginLeft: "12%" }}>
+              <img
+                src={coordinate && coordinate.image}
+                width="300vx"
+                // height="100vw"
+              ></img>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} key={Math.random()}>
+            <Box sx={{ marginLeft: "15%", marginTop: "10%" }}>
+              <Typography variant="h3" sx={{ display: "inline-block" }}>
+                {likes && likes.length}
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ display: "inline-block", marginLeft: "4px" }}
+              >
+                いいね
+              </Typography>
+
+              <Typography
+                variant="h5"
+                sx={{ marginTop: "25px", marginLeft: "10px" }}
+              >
+                {user && user.gender === 1
+                  ? "男性"
+                  : user && user.gender === 2
+                  ? "女性"
+                  : "その他"}
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ marginTop: "8px", marginLeft: "10px" }}
+              >
+                {user && user.height}cm
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ marginTop: "8px", marginLeft: "10px" }}
+              >
+                {user && user.age}歳
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* <Box sx={{ display: "flex", marginTop: "20px" }}>
+          <img
+            src={coordinate && coordinate.image}
+            width="300vx"
+            // height="100vw"
+          ></img>
+
           <Box sx={{ margin: "30px", marginLeft: "3vw" }}>
             <Typography variant="h3" sx={{ display: "flex" }}>
               {likes && likes.length}
@@ -73,7 +129,7 @@ const DetailsPage: NextPage = () => {
               {user && user.age}歳
             </Typography>
           </Box>
-        </Box>
+        </Box> */}
       </Container>
 
       <SimpleBottomNavigation

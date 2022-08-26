@@ -45,7 +45,7 @@ export const CoordinateCard = ({ imageURL, link }: CoordinateCardProps) => {
     <Paper
       sx={{
         width: "100%",
-        height: "320px",
+        height: "500px",
         overflow: "hidden",
         // 参考になるページ
         // https://developer.mozilla.org/ja/docs/Web/CSS/filter

@@ -48,10 +48,9 @@ const CrossMap = ({ positions = tmpPoses }: { positions?: Position[] }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
         {positions.map((value, index) => (
           <Marker position={[value.lat, value.lon]} key={Math.random()}>
-            <Popup>{index + 1}</Popup>
+            {/* <Popup>{index + 1}</Popup> */}
           </Marker>
         ))}
       </MapContainer>

@@ -37,7 +37,7 @@ const priceList: CustomSelectItem[] = [
 
 const initialState: Clothes = {
   category: "トップス",
-  brand: "uniqlo",
+  brand: "ユニクロ",
   price: "0~1000",
 };
 

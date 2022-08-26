@@ -39,11 +39,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/addCoordinate.js"
-    ],
-    "/nationalMap": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/nationalMap.js"
     ]
   },
   "ampFirstPages": []

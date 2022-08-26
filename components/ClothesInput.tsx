@@ -6,14 +6,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const initialState: Clothes[] = [
   {
     category: "トップス",
-    brand: "uniqlo",
+    brand: "ユニクロ",
     price: "0~1000",
   },
 ];
 
 const initialValue: Clothes = {
   category: "トップス",
-  brand: "uniqlo",
+  brand: "ユニクロ",
   price: "0~1000",
 };
 
