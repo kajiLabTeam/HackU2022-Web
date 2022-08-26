@@ -11,10 +11,21 @@ import {
   Alert,
   AlertColor,
   Box,
+  Typography,
 } from "@mui/material";
 import { CustomAppBar } from "../components";
 import axios from "axios";
 
+//ここからfirebase関連
+import { initFirebase, app } from "../src/xclotheslogin"; //これ牧野くんのほう
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
+
+//ほんへ
 const tmpMail: string = "serina@aitech.ac.jp";
 
 const Home: NextPage = () => {
@@ -31,14 +42,80 @@ const Home: NextPage = () => {
     setOpen(false);
   };
 
+  //ここからfirebase関連
+  initFirebase();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth(app);
+  const handleLogout = async () => {
+    //console.log(auth);
+    //logout用
+    await signOut(auth);
+    await router.push("/");
+  };
+
   return (
     <>
       {/* <h1>user_id:{router.query.userId}</h1> */}
+
       <CustomAppBar title="ログイン" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <Box></Box>
           <Box></Box>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            onClick={async () => {
+              try {
+                // signInWithRedirect(auth, provider);
+                const result = await signInWithPopup(auth, provider);
+                //console.log(result.user);
+                console.log(result.user.email);
+                //console.log(auth.currentUser);
+                handleLogout();
+                //console.log(auth.currentUser);
+                try {
+                  const url = `https://xclothes.harutiro.net/users/mail/${result.user.email}`;
+
+                  const response = await axios.get(url);
+                  console.log(response);
+
+                  router.push({
+                    pathname: `/${response.data.id}`, //URL
+                    query: { moveId: response.data.id }, //検索クエリ
+                  });
+
+                  setOpen(true);
+                  setSeverity("success");
+                  setMessage("ログインに成功しました");
+                } catch (e) {
+                  console.error(e);
+                  setOpen(true);
+                  setSeverity("error");
+                  setMessage("登録されていないアカウントです");
+                }
+              } catch (e) {
+                console.error(e);
+                setOpen(true);
+                setSeverity("error");
+                setMessage("ログインに失敗しました");
+              }
+            }}
+            sx={{ mt: 7, mb: 2, color: "secondary" }}
+          >
+            Googleアカウントでログイン
+          </Button>
+          <Typography variant="subtitle2">
+            ※すれ違いに必要なデータをスマートフォンから取得する必要があります。
+            <br />
+            スマホアプリからサインアップを行ってください。
+          </Typography>
+
+          <Box></Box>
+          <Box></Box>
+          <p>↓デバッグ用↓</p>
+
           <TextField
             id="standard-basic"
             label="e-mail"
