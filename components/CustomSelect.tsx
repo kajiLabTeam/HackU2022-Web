@@ -30,8 +30,16 @@ export const CustomSelect = ({
         value={formValue}
         label={label}
         onChange={(event) => {
-          setFormValue(event.target.value);
-          onChange && onChange(event.target.value);
+          if (event.target.value == "その他") {
+            let res = window.prompt("入力してください");
+            if (res != "" && res != null) {
+              setFormValue(res);
+              onChange && onChange(res);
+            }
+          } else {
+            setFormValue(event.target.value);
+            onChange && onChange(event.target.value);
+          }
         }}
       >
         {items.map((item) => (
