@@ -15,21 +15,26 @@ import useSWR from "swr";
 import { Like, Coordinate } from "../../types";
 import { userAgent } from "next/server";
 
-const tmpImages = [
-  "https://res.cloudinary.com/dificqqyf/image/upload/v1661253712/kez6ljjzjzwfkh5fedpa.jpg",
-  "https://res.cloudinary.com/dificqqyf/image/upload/v1661255156/Screenshot_from_2022-08-23_19-06-56_r8trfu.png",
-];
+// const tmpImages = [
+//   "https://res.cloudinary.com/dificqqyf/image/upload/v1661253712/kez6ljjzjzwfkh5fedpa.jpg",
+//   "https://res.cloudinary.com/dificqqyf/image/upload/v1661255156/Screenshot_from_2022-08-23_19-06-56_r8trfu.png",
+// ];
+
+const user_id: string = "oirulFjaM";
 
 const UserPage: NextPage = () => {
   const router = useRouter();
 
-  //swrの解説
+  //swrの解説 ここでget
   //https://swr.vercel.app/ja/docs/global-configuration
   const { data: likes } = useSWR<Like[]>(
-    `/likes?receive_user_id=${router.query.userId}`
+    //  `/likes?receive_user_id=${router.query.userId}`
+    `/likes/${user_id}/likes`
   );
 
-  const { data: coordinates } = useSWR<Coordinate[]>("/coordinates");
+  const { data: coordinates } = useSWR<Coordinate[]>(
+    `/users/${user_id}/coordinates`
+  );
 
   return (
     <Box>
@@ -53,9 +58,9 @@ const UserPage: NextPage = () => {
             (coordinates &&
               coordinates.map((coordinate) => {
                 return {
-                  imageURL:
-                    "https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg",
-                  link: `${router.query.userId}/details/coordinateid`,
+                  // imageURL:"https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg",
+                  imageURL: coordinate.image,
+                  link: `${router.query.userId}/details/${coordinate.id}`,
                   //link: "userid/details/coordinateid",
                 };
               })) ??

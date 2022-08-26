@@ -8,6 +8,8 @@ import {
   CrossMap,
 } from "../../../components";
 import { useRouter } from "next/router";
+import { Like, Coordinate, User } from "../../../types";
+import useSWR from "swr";
 
 const likesCount: number = 12;
 const age: number = 20;
@@ -16,7 +18,17 @@ const personHeight: number = 160;
 
 const DetailsPage: NextPage = () => {
   const router = useRouter();
-  console.log(router.query.coordinateId);
+
+  const { data: likes } = useSWR<Like[]>(
+    `/coordinates/${router.query.coordinateId}/likes`
+  );
+
+  const { data: coordinate } = useSWR<Coordinate>(
+    `/coordinates/${router.query.coordinateId}`
+  );
+
+  const { data: user } = useSWR<User>(`/users/${router.query.userId}`);
+
   return (
     // <Box sx={{ textAlign: "center" }}>
     <Box>
@@ -37,14 +49,14 @@ const DetailsPage: NextPage = () => {
           ></Image> */}
           <Box sx={{ marginLeft: "5vw" }}>
             <img
-              src="https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg"
+              src={coordinate && coordinate.image}
               width="300vx"
               // height="100vw"
             ></img>
           </Box>
           <Box sx={{ margin: "30px", marginLeft: "3vw" }}>
             <Typography variant="h3" sx={{ display: "flex" }}>
-              {likesCount}
+              {likes && likes.length}
               <Typography variant="h5" sx={{ marginTop: "22px" }}>
                 いいね
               </Typography>
@@ -54,19 +66,23 @@ const DetailsPage: NextPage = () => {
               variant="h5"
               sx={{ marginTop: "25px", marginLeft: "10px" }}
             >
-              {gender === 1 ? "男性" : gender === 2 ? "女性" : "その他"}
+              {user && user.gender === 1
+                ? "男性"
+                : user && user.gender === 2
+                ? "女性"
+                : "その他"}
             </Typography>
             <Typography
               variant="h5"
               sx={{ marginTop: "8px", marginLeft: "10px" }}
             >
-              {personHeight}cm
+              {user && user.height}cm
             </Typography>
             <Typography
               variant="h5"
               sx={{ marginTop: "8px", marginLeft: "10px" }}
             >
-              {age}歳
+              {user && user.age}歳
             </Typography>
           </Box>
         </Box>

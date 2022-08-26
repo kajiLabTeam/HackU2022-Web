@@ -40,7 +40,7 @@ const CrossMap = ({ positions = tmpPoses }: { positions?: Position[] }) => {
           positions[0]?.lat ?? tmpPoses[0].lat,
           positions[0]?.lon ?? tmpPoses[0].lon,
         ]}
-        zoom={12}
+        zoom={10}
         scrollWheelZoom={false}
         style={{ height: "50vh", width: "100%" }}
       >

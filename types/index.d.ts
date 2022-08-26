@@ -26,3 +26,13 @@ export interface Coordinate extends ModelBase {
   user_id?: string;
   wears: Wear[];
 }
+
+export interface User extends ModelBase {
+  ble: string;
+  mail: string;
+  name: string;
+  gender: number;
+  age: string;
+  height: number;
+  icon: string;
+}

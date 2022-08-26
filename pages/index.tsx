@@ -54,6 +54,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <h1>user_id:{router.query.userId}</h1>
       <CustomAppBar title="ログイン" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
@@ -146,6 +147,11 @@ onClick={() => {
             });
           }}
 
-
+上の受け取る形
 {router.query.input}
+
+
+
+/hoge    のなかの hoge が受け取れる
+router.query.userId
 */

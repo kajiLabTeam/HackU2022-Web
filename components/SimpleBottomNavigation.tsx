@@ -114,3 +114,20 @@ export const SimpleBottomNavigation = ({
       </Box>
     );
   };
+
+/*
+onClick={() => {
+  router.push({
+    pathname: "../.././profile", //URL
+    query: { moveId: user_id }, //検索クエリ
+    });
+}}
+
+上の受け取る形
+{router.query.moveId}
+
+
+
+/hoge    のなかの hoge が受け取れる
+router.query.userId
+*/

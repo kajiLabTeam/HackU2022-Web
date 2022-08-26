@@ -48,11 +48,21 @@ export const CloudinaryUpload = ({
         }}
       >
         {imgUrl !== "" && (
-          <img src={beforeImaheURL} width="100%" height="100%" />
+          <img
+            src={beforeImaheURL}
+            width="100%"
+            height="100%"
+            align-self="center"
+          />
         )}
       </Box>
 
-      <Button variant="contained" component="label" sx={{ marginRight: "0%" }}>
+      <Button
+        variant="contained"
+        component="label"
+        sx={{ marginLeft: "10%" }}
+        //sx={{ alignSelf: "center" }}
+      >
         画像を選択
         <input
           hidden
