@@ -23,6 +23,9 @@ import { FlashlightOnTwoTone } from "@mui/icons-material";
 import { info } from "console";
 import { useRouter } from "next/router";
 
+import { Like, User } from "../types";
+import useSWR from "swr";
+
 interface wear {
   category: string;
   brand: string;
@@ -39,15 +42,19 @@ interface Coordinate {
 const initialState: Coordinate = {
   public: false,
   image: "",
-  user_id: "13YjhgjtM",
-  wears: [{ category: "トップス", brand: "uniqlo", price: "0~1000" }],
+  user_id: "",
+  wears: [{ category: "トップス", brand: "ユニクロ", price: "0~1000" }],
 };
 
 const Home: NextPage = () => {
   //router設定
   const router = useRouter();
+  //const { data: user } = useSWR<User>(`/users/${router.query.moveId}`);
 
   //const [values, setValues] = React.useState(initialState);
+  initialState.user_id =
+    typeof router.query.moveId === "string" ? router.query.moveId : "error";
+
   const [values, setValues] = React.useState<Coordinate>(initialState);
 
   //Snackbarの用
@@ -144,7 +151,7 @@ const Home: NextPage = () => {
       </Snackbar>
 
       {/* デバッグよう */}
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+      <pre>{JSON.stringify(values, null, 2)}</pre>
 
       {/*
           <TextField

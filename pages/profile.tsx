@@ -64,8 +64,8 @@ const Home: NextPage = () => {
     setOpen(false);
   };
 
-  //const { data: userData } = useSWR<UserData>(`/users/${user_id}`, {
-  const { data: userData } = useSWR<UserData>("/users/-0MlNSjap", {
+  const { data: userData } = useSWR<UserData>(`/users/${router.query.moveId}`, {
+    //const { data: userData } = useSWR<UserData>("/users/-0MlNSjap", {
     revalidateOnFocus: false,
   });
   const [formValue, setFormValue] = React.useState<UserData>();

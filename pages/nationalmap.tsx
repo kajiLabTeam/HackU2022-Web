@@ -29,11 +29,11 @@ const UserPage: NextPage = () => {
   //https://swr.vercel.app/ja/docs/global-configuration
   const { data: likes } = useSWR<Like[]>(
     //  `/likes?receive_user_id=${router.query.userId}`
-    `/likes/${user_id}/likes`
+    "/coordinates/public/likes"
   );
 
   const { data: coordinates } = useSWR<Coordinate[]>(
-    `/users/${user_id}/coordinates`
+    "/coordinates/public/coordinates"
   );
 
   return (
@@ -60,7 +60,7 @@ const UserPage: NextPage = () => {
                 return {
                   // imageURL:"https://res.cloudinary.com/dhbnknlos/image/upload/v1661334091/My%20Uploads/S__363085827_mqpinf.jpg",
                   imageURL: coordinate.image,
-                  link: `${router.query.userId}/details/${coordinate.id}`,
+                  link: `${router.query.moveId}/details/${coordinate.id}`,
                   //link: "userid/details/coordinateid",
                 };
               })) ??

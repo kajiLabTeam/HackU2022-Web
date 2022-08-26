@@ -14,7 +14,7 @@ import {
 import { CustomAppBar, SimpleBottomNavigation } from "../components";
 import axios from "axios";
 
-const tmpMail: string = "fuma@aitech.ac.jp";
+const tmpMail: string = "yada@aitech.ac.jp";
 const tmpValue = {
   name: "fuma",
   ble: "qawse",
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1>user_id:{router.query.userId}</h1>
+      {/* <h1>user_id:{router.query.userId}</h1> */}
       <CustomAppBar title="ログイン" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
@@ -82,7 +82,13 @@ const Home: NextPage = () => {
                 console.log(response);
                 //console.log(response.data.id);
                 //router.replace("/addCoordinate"); // 登録後の遷移先
-                router.replace(`/${response.data.id}`); // 登録後の遷移先
+
+                //router.replace(`/${response.data.id}`); // 登録後の遷移先
+                router.push({
+                  pathname: `/${response.data.id}`, //URL
+                  query: { moveId: response.data.id }, //検索クエリ
+                });
+
                 setOpen(true);
                 setSeverity("success");
                 setMessage("ログインに成功しました");
