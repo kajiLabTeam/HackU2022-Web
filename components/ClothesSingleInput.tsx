@@ -61,7 +61,7 @@ export const ClothesSingleInput = ({
     <Paper sx={{ padding: 4, paddingTop: 6 }}>
       <Stack spacing={2}>
         <CustomSelect
-          label="カテゴリ"
+          label={"カテゴリ：" + values.category}
           items={categoryList}
           value={values.category}
           onChange={(value) => {
@@ -70,7 +70,7 @@ export const ClothesSingleInput = ({
           }}
         />
         <CustomSelect
-          label="ブランド"
+          label={"ブランド:" + values.brand}
           items={brandList}
           value={values.brand}
           onChange={(value) => {
