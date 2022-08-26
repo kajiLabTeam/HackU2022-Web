@@ -32,6 +32,10 @@ const DetailsPage: NextPage = () => {
 
   const { data: user } = useSWR<User>(`/users/${coordinate?.user_id}`);
 
+  const { data: sendUsers } = useSWR<User[]>(
+    `/coordinates/${router.query.coordinateId}/likes/senduser/users`
+  );
+
   // const { data: coordinates } = useSWR<Coordinate[]>(
   //   `/users/${router.query.userId}/coordinates`
   // );
@@ -56,8 +60,14 @@ const DetailsPage: NextPage = () => {
       <CrossMap
         positions={
           (likes &&
-            likes.map((like) => {
-              return { lat: like.lat, lon: like.lon };
+            sendUsers &&
+            likes.map((like, index) => {
+              return {
+                lat: like.lat,
+                lon: like.lon,
+                gender: sendUsers[index]?.gender,
+                age: sendUsers[index]?.age,
+              };
             })) ??
           []
         }
@@ -78,19 +88,28 @@ const DetailsPage: NextPage = () => {
           </Grid>
           <Grid item xs={12} sm={6} key={Math.random()}>
             <Box sx={{ marginLeft: "15%", marginTop: "10%" }}>
-              <Typography variant="h3" sx={{ display: "inline-block" }}>
+              <Typography
+                variant="h5"
+                sx={{ display: "inline-block", marginLeft: "4px" }}
+              >
+                💖
+              </Typography>
+              <Typography
+                variant="h3"
+                sx={{ display: "inline-block", marginLeft: "10px" }}
+              >
                 {likes && likes.length}
               </Typography>
               <Typography
                 variant="h5"
-                sx={{ display: "inline-block", marginLeft: "4px" }}
+                sx={{ display: "inline-block", marginLeft: "5px" }}
               >
                 いいね
               </Typography>
 
               <Typography
                 variant="h5"
-                sx={{ marginTop: "25px", marginLeft: "10px" }}
+                sx={{ marginTop: "25px", marginLeft: "6px" }}
               >
                 {(() => {
                   if (user) {
@@ -127,6 +146,12 @@ const DetailsPage: NextPage = () => {
                   router.query.userId !== coordinate?.user_id &&
                   user.age + "歳"}
                 {/* {user && user.age}歳 */}
+              </Typography>
+              <Typography
+                variant="overline"
+                sx={{ marginTop: "8px", marginLeft: "10px" }}
+              >
+                マーカーをクリックで相手の情報を表示
               </Typography>
             </Box>
           </Grid>

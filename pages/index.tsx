@@ -93,7 +93,7 @@ const Home: NextPage = () => {
                   console.error(e);
                   setOpen(true);
                   setSeverity("error");
-                  setMessage("登録されていないアカウントです");
+                  setMessage("登録されていないgoogleアカウントです");
                 }
               } catch (e) {
                 console.error(e);

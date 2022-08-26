@@ -5,6 +5,7 @@ import L from "leaflet";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { Typography } from "@mui/material";
 
 //エラー吐いてた原因、失くしていいものかはわからんけど、消しても動いた
 //delete L.Icon.Default.prototype._getIconUrl;
@@ -53,16 +54,19 @@ const CrossMap = ({ positions = tmpPoses }: { positions?: Position[] }) => {
         {positions.map((value, index) => (
           <Marker position={[value.lat, value.lon]} key={Math.random()}>
             <Popup>
-              <h1>
+              <Typography
+                variant="h6"
+                // sx={{ display: "inline-block", marginLeft: "4px" }}
+              >
+                {value.age && value.age + "歳, "}
                 {value.gender && value.gender === 1
-                  ? "性別：男性"
+                  ? "男性"
                   : value.gender === 2
-                  ? "性別：女性"
+                  ? "女性"
                   : value.gender === 3
-                  ? "性別：その他"
+                  ? "その他"
                   : ""}
-              </h1>
-              <h1>{value.age && value.age + "歳"}</h1>
+              </Typography>
             </Popup>
           </Marker>
         ))}

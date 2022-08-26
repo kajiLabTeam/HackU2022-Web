@@ -27,6 +27,10 @@ const UserPage: NextPage = () => {
     "/coordinates/public/coordinates"
   );
 
+  const { data: likeNumber } = useSWR<Like[][]>(
+    "/coordinates/public/coordinateId/likes"
+  );
+
   return (
     <Box>
       {/* <h1>user_id:{router.query.userId}</h1> */}
@@ -47,10 +51,13 @@ const UserPage: NextPage = () => {
         <ImageGrid
           CoordinateCardProp={
             (coordinates &&
-              coordinates.map((coordinate) => {
+              likeNumber &&
+              coordinates.map((coordinate, index) => {
                 return {
                   imageURL: coordinate.image,
                   link: `${router.query.moveId}/details/${coordinate.id}`,
+                  // likeNum: likeNumber.length,
+                  likeNum: likeNumber[index].length,
                 };
               })) ??
             []
