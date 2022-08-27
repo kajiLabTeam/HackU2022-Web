@@ -24,6 +24,7 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
+import { baseURL } from "../src/baseURL";
 
 //ほんへ
 const tmpMail: string = "serina@aitech.ac.jp";
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
                 handleLogout();
                 //console.log(auth.currentUser);
                 try {
-                  const url = `https://xclothes.harutiro.net/users/mail/${result.user.email}`;
+                  const url = `${baseURL}/users/mail/${result.user.email}`;
 
                   const response = await axios.get(url);
                   console.log(response);
@@ -131,7 +132,7 @@ const Home: NextPage = () => {
             variant="contained"
             onClick={async () => {
               try {
-                const url = `https://xclothes.harutiro.net/users/mail/${eMail}`;
+                const url = `${baseURL}/users/mail/${eMail}`;
 
                 const response = await axios.get(url);
                 console.log(response);

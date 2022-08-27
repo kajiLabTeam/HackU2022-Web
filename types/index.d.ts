@@ -36,3 +36,12 @@ export interface User extends ModelBase {
   height: number;
   icon: string;
 }
+
+//
+
+//
+
+// //const baseURL = "https://xclothes.harutiro.net";
+// const baseURL = "https://dev-xclothes.harutiro.net";
+
+// export { baseURL };
