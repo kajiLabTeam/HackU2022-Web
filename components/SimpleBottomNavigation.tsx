@@ -46,9 +46,9 @@ export const SimpleBottomNavigation = ({
               //} else {
 
               //router.replace("../.././addCoordinate");
-              if (user_id === "error") router.replace("../.././");
+              if (user_id === "error") router.replace("../../");
               router.push({
-                pathname: "../.././addCoordinate", //URL
+                pathname: "../../addCoordinate", //URL
                 query: { moveId: user_id }, //検索クエリ
               });
               //}
@@ -62,9 +62,9 @@ export const SimpleBottomNavigation = ({
               //  router.replace("./profile");
               //} else {
               //router.replace("../.././profile");
-              if (user_id === "error") router.replace("../.././");
+              if (user_id === "error") router.replace("../../");
               router.push({
-                pathname: "../.././profile", //URL
+                pathname: "../../profile", //URL
                 query: { moveId: user_id }, //検索クエリ
               });
               //}
@@ -79,9 +79,9 @@ export const SimpleBottomNavigation = ({
               //  router.replace(`./${user_id ?? ""}`);
               //} else {
               //router.replace(`../.././${user_id ?? ""}`);
-              if (user_id === "error") router.replace("../.././");
+              if (user_id === "error") router.replace("../../");
               router.push({
-                pathname: `../.././${user_id}`, //URL
+                pathname: `../../${user_id}`, //URL
                 query: { moveId: user_id }, //検索クエリ
               });
               //}
@@ -96,9 +96,9 @@ export const SimpleBottomNavigation = ({
               //  router.replace("./nationalMap");
               //} else {
               //router.replace("../.././nationalMap");
-              if (user_id === "error") router.replace("../.././");
+              if (user_id === "error") router.replace("../../");
               router.push({
-                pathname: "../.././nationalMap", //URL
+                pathname: "../../nationalMap", //URL
                 query: { moveId: user_id }, //検索クエリ
               });
               //}

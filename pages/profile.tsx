@@ -23,6 +23,7 @@ import {
 import axios from "axios";
 import useSWR from "swr";
 import { User } from "../types";
+import { baseURL } from "../src/baseURL";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -119,7 +120,9 @@ const Home: NextPage = () => {
             variant="contained"
             onClick={async () => {
               try {
-                const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
+                //const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
+                const url = `${baseURL}/users/-0MlNSjap`;
+
                 const response = await axios.put(url, formValue);
                 console.log(response);
 

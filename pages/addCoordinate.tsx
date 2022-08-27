@@ -19,10 +19,11 @@ import {
   CloudinaryUpload,
   SimpleBottomNavigation,
 } from "../components";
-import ChangeColor from "../components/ChangeColor";
+// import ChangeColor from "../components/ChangeColor";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Coordinate } from "../types";
+import { baseURL } from "../src/baseURL";
 
 const initialState: Coordinate = {
   public: false,
@@ -55,7 +56,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {/* <ThemeProvider theme={ChangeColor}> */}
       <CustomAppBar title="服登録" />
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
@@ -92,7 +92,8 @@ const Home: NextPage = () => {
             variant="contained"
             onClick={async () => {
               try {
-                const url = "https://xclothes.harutiro.net/coordinates";
+                //const url = "https://xclothes.harutiro.net/coordinates";
+                const url = `${baseURL}/coordinates`;
 
                 const response = await axios.post(url, values);
                 console.log(response);
@@ -137,9 +138,8 @@ const Home: NextPage = () => {
         </Alert>
       </Snackbar>
 
-      {/* デバッグよう */}
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-      {/* </ThemeProvider> */}
+      {/* デバッグよう  */}
+      <pre>{JSON.stringify(values, null, 2)}</pre>
     </>
   );
 };
