@@ -22,7 +22,7 @@ const UserPage: NextPage = () => {
     //  `/likes?receive_user_id=${router.query.userId}`
     "/coordinates/public/likes"
   );
-  console.log("likes");
+  console.log("likes これ");
   console.log(likes);
 
   const { data: coordinates } = useSWR<Coordinate[]>(

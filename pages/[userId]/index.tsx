@@ -62,7 +62,7 @@ const UserPage: NextPage = () => {
 
       {/* <pre>{JSON.stringify(coordinates, null, 2)}</pre> */}
       <SimpleBottomNavigation
-        pageNum={2}
+        pageNum={1}
         user_id={
           typeof router.query.userId === "string"
             ? router.query.userId

@@ -54,22 +54,8 @@ export const SimpleBottomNavigation = ({
               //}
             }}
           />
-          <BottomNavigationAction
-            label="プロフィール"
-            icon={<PersonOutlineIcon />}
-            onClick={() => {
-              //if (detailPageFlg ?? false) {
-              //  router.replace("./profile");
-              //} else {
-              //router.replace("../.././profile");
-              if (user_id === "error") router.replace("../../");
-              router.push({
-                pathname: "../../profile", //URL
-                query: { moveId: user_id }, //検索クエリ
-              });
-              //}
-            }}
-          />
+
+          
           <BottomNavigationAction
             label="ホーム"
             icon={<HomeIcon />}
@@ -87,8 +73,30 @@ export const SimpleBottomNavigation = ({
               //}
             }}
           />
-          {/* <BottomNavigationAction label="設定" icon={<SettingsIcon />} /> */}
+
+
           <BottomNavigationAction
+            label="プロフィール"
+            icon={<PersonOutlineIcon />}
+            onClick={() => {
+              //if (detailPageFlg ?? false) {
+              //  router.replace("./profile");
+              //} else {
+              //router.replace("../.././profile");
+              if (user_id === "error") router.replace("../../");
+              router.push({
+                pathname: "../../profile", //URL
+                query: { moveId: user_id }, //検索クエリ
+              });
+              //}
+            }}
+          />
+          
+          {/* <BottomNavigationAction label="設定" icon={<SettingsIcon />} /> */}
+
+
+          
+          {/* <BottomNavigationAction
             label="全国マップ"
             icon={<LocationOnIcon />}
             onClick={() => {
@@ -103,8 +111,11 @@ export const SimpleBottomNavigation = ({
               });
               //}
             }}
-          />
+          /> */}
         </BottomNavigation>
+
+
+
         {/*https://qiita.com/BlackMagician/items/e0013a13a377039013ed  これで画面遷移しよう*/}
       </Paper>
     </Box>
