@@ -65,7 +65,7 @@ const UserPage: NextPage = () => {
         />
       </Container>
 
-      {/* <pre>{JSON.stringify(coordinates, null, 2)}</pre> */}
+      <pre>{JSON.stringify(coordinates, null, 2)}</pre>
       <SimpleBottomNavigation
         pageNum={3}
         user_id={
