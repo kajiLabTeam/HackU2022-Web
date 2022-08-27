@@ -123,7 +123,7 @@ const Home: NextPage = () => {
             onClick={async () => {
               try {
                 //const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
-                const url = `${baseURL}/users/${user_id}`;
+                const url = `${baseURL}/users/${router.query.moveId}`;
 
                 const response = await axios.put(url, formValue);
                 console.log(response);
