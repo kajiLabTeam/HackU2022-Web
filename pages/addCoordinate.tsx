@@ -64,9 +64,10 @@ const Home: NextPage = () => {
             onChange={(v) => setValues({ ...values, image: v })}
           />
 
-          <Typography variant="subtitle2" sx={{ marginLeft: "30%" }}>
-            ※顔が写っていない写真を使用してください
+          <Typography variant="subtitle2" sx={{ marginLeft: "40%" }}>
+            ※顔が写っていない写真を推奨しています
           </Typography>
+          <Box></Box>
 
           <FormControlLabel
             control={
