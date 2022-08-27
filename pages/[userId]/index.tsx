@@ -1,6 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import { Box, Container } from "@mui/material";
+import { Box, Container,Typography} from "@mui/material";
 import { useRouter } from "next/router";
 import {
   CustomAppBar,
@@ -60,7 +60,7 @@ const UserPage: NextPage = () => {
         />
       </Container>
 
-      <pre>{JSON.stringify(coordinates, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(coordinates, null, 2)}</pre> */}
       <SimpleBottomNavigation
         pageNum={2}
         user_id={

@@ -24,6 +24,18 @@ import axios from "axios";
 import useSWR from "swr";
 import { User } from "../types";
 import { baseURL } from "../src/baseURL";
+import {v4 as uuidv4} from 'uuid';
+
+
+interface SignUp {
+    name:string;
+    ble:string;
+    icon:string;
+    gender:number;
+    age:string;
+    height:number;
+    mail:string;
+}
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -40,39 +52,32 @@ const Home: NextPage = () => {
     setOpen(false);
   };
 
-  const { data: user } = useSWR<User>(`/users/${router.query.moveId}`, {
-    revalidateOnFocus: false,
-  });
-  console.log("user");
-  console.log(user);
-  const [formValue, setFormValue] = React.useState<User>();
-  React.useEffect(() => {
-    user && setFormValue(user);
-  }, [user]);
+  const[userInfo,setUserInfo]=React.useState();
+  
 
   return (
     <>
-      <CustomAppBar title="プロフィール更新" />
+      <CustomAppBar title="サインアップ" />
 
       <Container maxWidth="sm" sx={{ padding: 6 }}>
         <Stack spacing={4}>
           <CloudinaryUpload
-            beforeImaheURL={formValue?.icon}
-            onChange={(e) => user && setFormValue({ ...user, icon: e })}
+            beforeImaheURL={userInfo?.icon}
+            onChange={(e) => setUserInfo({...userInfo,icon:e})}
           />
           <TextField
             id="standard-basic"
             label="名前"
             variant="standard"
-            value={formValue?.name ?? ""}
+            value={userInfo?.name}
             onChange={(e) => {
-              user && setFormValue({ ...user, name: e.target.value });
+              setUserInfo({ ...userInfo, name: e.target.value });
             }}
           />
           <RadioButtonsGroup
-            value={formValue?.gender}
+            value={userInfo?.gender}
             onChange={(e) => {
-              user && setFormValue({ ...user, gender: e });
+              setUserInfo({ ...userInfo, gender: e });
             }}
           />
           <TextField
@@ -82,25 +87,25 @@ const Home: NextPage = () => {
             InputLabelProps={{
               shrink: true,
             }}
-            value={formValue?.height ?? {}}
+            value={userInfo?.height ?? {}}
             variant="standard"
             onChange={(e) => {
               const tmpHeight = e.target.value;
-              user && setFormValue({ ...user, height: Number(tmpHeight) });
+              setUserInfo({ ...userInfo, height: Number(tmpHeight) });
             }}
           />
           <FormControl fullWidth>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
-              年齢:{formValue?.age ?? ""}
+              年齢:{userInfo?.age ?? ""}
             </InputLabel>
             <NativeSelect
-              value={formValue?.age ?? ""}
+              value={userInfo?.age ?? ""}
               inputProps={{
                 name: "age",
                 id: "uncontrolled-native",
               }}
               onChange={(e) => {
-                user && setFormValue({ ...user, age: e.target.value });
+                setUserInfo({ ...userInfo, age: e.target.value });
               }}
             >
               <option value="~10">~10</option>
@@ -121,27 +126,33 @@ const Home: NextPage = () => {
           <Button
             variant="contained"
             onClick={async () => {
+              router.query.googleInfo && setUserInfo({...userInfo , mail : router.query.googleInfo});
+              setUserInfo({...userInfo , ble : uuidv4()});
               try {
+              
                 //const url = "https://xclothes.harutiro.net/users/-0MlNSjap";
-                const url = `${baseURL}/users/${user_id}`;
+                const url = `${baseURL}/users/-0MlNSjap`;
 
                 const response = await axios.put(url, formValue);
                 console.log(response);
 
                 setOpen(true);
                 setSeverity("success");
-                setMessage("更新しました");
+                setMessage("登録しました");
+
+                // ここに遷移画面
               } catch (e) {
                 console.error(e);
                 setOpen(true);
                 setSeverity("error");
-                setMessage("更新に失敗しました");
+                setMessage("登録に失敗しました");
               }
             }}
           >
-            更新
+            登録
           </Button>
-
+          
+          <pre>{JSON.stringify(userInfo, null, 2)}</pre>
           {/* デバッグよう */}
           {/* <pre>{JSON.stringify(formValue, null, 2)}</pre> */}
         </Stack>

@@ -11,7 +11,7 @@ import {
 import useSWR from "swr";
 import { Like, Coordinate } from "../types";
 
-const user_id: string = "oirulFjaM";
+// const user_id: string = "oirulFjaM";
 
 const UserPage: NextPage = () => {
   const router = useRouter();
@@ -22,14 +22,20 @@ const UserPage: NextPage = () => {
     //  `/likes?receive_user_id=${router.query.userId}`
     "/coordinates/public/likes"
   );
+  console.log("likes");
+  console.log(likes);
 
   const { data: coordinates } = useSWR<Coordinate[]>(
     "/coordinates/public/coordinates"
   );
+  console.log("coordinates");
+  console.log(coordinates);
 
   const { data: likeNumber } = useSWR<Like[][]>(
     "/coordinates/public/coordinateId/likes"
   );
+  console.log("likeNumber");
+  console.log(likeNumber);
 
   return (
     <Box>
@@ -65,7 +71,7 @@ const UserPage: NextPage = () => {
         />
       </Container>
 
-      <pre>{JSON.stringify(coordinates, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(coordinates, null, 2)}</pre> */}
       <SimpleBottomNavigation
         pageNum={3}
         user_id={
