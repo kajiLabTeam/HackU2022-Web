@@ -63,7 +63,7 @@ const Home: NextPage = () => {
         <Stack spacing={4}>
           <Box></Box>
           <Box></Box>
-          <Button
+          {/* <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -71,7 +71,7 @@ const Home: NextPage = () => {
               try {
                 // signInWithRedirect(auth, provider);
                 const result = await signInWithPopup(auth, provider);
-                //console.log(result.user);
+                console.log(result.user);
                 console.log(result.user.email);
                 //console.log(auth.currentUser);
                 handleLogout();
@@ -95,6 +95,11 @@ const Home: NextPage = () => {
                   setOpen(true);
                   setSeverity("error");
                   setMessage("登録されていないgoogleアカウントです");
+
+                   router.push({
+                     pathname: "./signUpPage", //URL
+                     query: { googleInfo: result.user.email }, //検索クエリ
+                   });
                 }
               } catch (e) {
                 console.error(e);
@@ -106,16 +111,12 @@ const Home: NextPage = () => {
             sx={{ mt: 7, mb: 2, color: "secondary" }}
           >
             Googleアカウントでログイン
-          </Button>
-          <Typography variant="subtitle2">
-            ※すれ違いに必要なデータをスマートフォンから取得する必要があります。
-            <br />
-            スマホアプリからサインアップを行ってください。
-          </Typography>
-
+          </Button> */}
+          
+{/* 
           <Box></Box>
           <Box></Box>
-          <p>↓デバッグ用↓</p>
+         */}
 
           <TextField
             id="standard-basic"
@@ -125,7 +126,7 @@ const Home: NextPage = () => {
             onChange={(e) => setEMail(e.target.value)}
           />
 
-          <Box></Box>
+          
           <Box></Box>
 
           <Button
@@ -135,6 +136,7 @@ const Home: NextPage = () => {
                 const url = `${baseURL}/users/mail/${eMail}`;
 
                 const response = await axios.get(url);
+                console.log("レスポンス");
                 console.log(response);
 
                 router.push({
@@ -156,7 +158,21 @@ const Home: NextPage = () => {
             ログイン
           </Button>
 
-          <pre>{JSON.stringify(eMail, null, 2)}</pre>
+          <Typography variant="subtitle2">
+          こちらのアカウントを入力するとゲストとして参加できます：{JSON.stringify(eMail, null, 2)}
+          </Typography>
+
+          {/* <pre>{JSON.stringify(eMail, null, 2)}</pre> */}
+
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Typography variant="subtitle2">
+            ※すれ違いに必要なデータをスマートフォンから取得する必要があります。
+            <br />
+            スマホアプリからサインアップを行ってください。
+          </Typography>
         </Stack>
       </Container>
       {/* <SimpleBottomNavigation /> */}

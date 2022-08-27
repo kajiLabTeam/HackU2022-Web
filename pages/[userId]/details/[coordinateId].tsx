@@ -39,8 +39,8 @@ const DetailsPage: NextPage = () => {
     <Box>
       <CustomAppBar title="評価の詳細" />
 
-      <h1>1:{router.query.userId}</h1>
-      <h1>2:{router.query.coordinateId}</h1>
+      {/* <h1>1:{router.query.userId}</h1>
+      <h1>2:{router.query.coordinateId}</h1> */}
 
       <CrossMap
         positions={

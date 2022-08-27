@@ -96,6 +96,7 @@ const Home: NextPage = () => {
                 const url = `${baseURL}/coordinates`;
 
                 const response = await axios.post(url, values);
+                console.log("レスポンス");
                 console.log(response);
 
                 setOpen(true);
@@ -139,7 +140,7 @@ const Home: NextPage = () => {
       </Snackbar>
 
       {/* デバッグよう  */}
-      <pre>{JSON.stringify(values, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
     </>
   );
 };
